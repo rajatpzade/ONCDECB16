@@ -4,5 +4,6 @@
 
 * docker run : create and run a conatiner 
 * docker start/stop : manages conatiners states 
-* docker exec : 
+* docker exec : interact with running conatiner
+* 
 * 
