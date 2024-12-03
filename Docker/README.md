@@ -6,4 +6,5 @@
 * docker start/stop : manages conatiners states 
 * docker exec : interact with running conatiner
 * docker inspect : get details information
-* docker logs : fetch
+* docker logs : fetch conatiners logs.
+* 
