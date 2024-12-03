@@ -7,4 +7,5 @@
 * docker exec : interact with running conatiner
 * docker inspect : get details information
 * docker logs : fetch conatiners logs.
-* docker cp : 
+* docker cp : copy fils between host and conatiner 
+* 
