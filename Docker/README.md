@@ -8,4 +8,4 @@
 * docker inspect : get details information
 * docker logs : fetch conatiners logs.
 * docker cp : copy fils between host and conatiner 
-* docker stats : 
+* docker stats : monitor reso
