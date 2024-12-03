@@ -3,5 +3,5 @@
 ## key commands 
 
 * docker run : create and run a conatiner 
-* 
+* docker start/stop :
 * 
