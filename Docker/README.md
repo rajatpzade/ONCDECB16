@@ -2,3 +2,5 @@
  
 ## key commands 
 
+* docker run : 
+* 
