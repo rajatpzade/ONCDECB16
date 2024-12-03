@@ -2,5 +2,6 @@
  
 ## key commands 
 
-* docker run : 
+* docker run : create and run a conatiner 
+* 
 * 
