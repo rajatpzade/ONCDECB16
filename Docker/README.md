@@ -67,4 +67,4 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
   ```
 - 2 Push the image
   ```
-  
+  docker push myrepo/ubuntu:v1
