@@ -1,6 +1,6 @@
 # ONCDECB16
  
- ## DevOps 
+ 
 
  # DevOps and Software Industry Overview
 
