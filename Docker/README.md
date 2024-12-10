@@ -56,3 +56,6 @@ docker pull ubuntu:20.04
 
 ### Tagging an Image
 
+```
+docker tag ubuntu:20.04 myrepo/ubuntu:v1
+```
