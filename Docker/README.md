@@ -136,19 +136,6 @@ docker cp web-server:/path/in/container /path/on/host
 - [Docker Official Documentation](https://docs.docker.com/)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # **Docker Images and Image Management**
 
 ## **Day 8: Docker Training**
