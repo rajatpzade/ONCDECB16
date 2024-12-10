@@ -87,5 +87,7 @@ docker save -o nginx_backup.tar nginx:latest
 docker load -i nginx_backup.tar
 ```
 ### Pruning Unused Images
+- Remove Dangling Images
+```
 
 
