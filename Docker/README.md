@@ -89,5 +89,8 @@ docker load -i nginx_backup.tar
 ### Pruning Unused Images
 - Remove Dangling Images
 ```
+docker image prune
+```
+
 
 
