@@ -62,4 +62,5 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
 ### Pushing an Image
 
 - 1 Login to Docker Hub
-  ```
+  ``` 
+  docker login 
