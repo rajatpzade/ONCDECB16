@@ -1,6 +1,140 @@
 # Introduction to docker commands
  
 
+# **Day 7: Docker Container Management**
+
+---
+
+## **1. Overview**
+Docker containers are lightweight, portable, and self-sufficient units that encapsulate an application and its dependencies.
+
+### **Key Features:**
+- Portable across environments.
+- Quick startup and shutdown times.
+- Resource isolation with minimal overhead.
+
+---
+
+## **2. Essential Docker Container Commands**
+Below are the essential Docker commands for container management:
+
+| **Command**               | **Description**                                                                                  | **Example**                                     |
+|---------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------|
+| `docker run`              | Create and start a container.                                                                   | `docker run nginx`                             |
+| `docker start`            | Start an existing container.                                                                    | `docker start <container-id>`                  |
+| `docker stop`             | Stop a running container.                                                                       | `docker stop <container-id>`                   |
+| `docker ps`               | List running containers.                                                                        | `docker ps`                                    |
+| `docker ps -a`            | List all containers, including stopped ones.                                                    | `docker ps -a`                                 |
+| `docker rm`               | Remove a container.                                                                             | `docker rm <container-id>`                     |
+| `docker logs`             | Fetch the logs of a container.                                                                  | `docker logs <container-id>`                   |
+| `docker stats`            | Show resource usage of running containers.                                                      | `docker stats`                                 |
+| `docker exec`             | Execute a command in a running container.                                                       | `docker exec -it <container-id> bash`          |
+| `docker inspect`          | Display detailed information about a container.                                                 | `docker inspect <container-id>`                |
+| `docker cp`               | Copy files between a container and the host.                                                    | `docker cp <container-id>:<file-path> <host>`  |
+| `docker prune`            | Remove unused containers and resources.                                                         | `docker container prune`                       |
+
+---
+
+## **3. Practical Examples**
+
+### **3.1. Creating and Running Containers**
+```bash
+docker run -d -p 8080:80 --name web-server nginx
+```
+- `-d`: Run container in detached mode.
+- `-p`: Map port 8080 on the host to port 80 in the container.
+- `--name`: Assign a name to the container.
+
+### **3.2. Stopping and Starting Containers**
+```bash
+docker stop web-server
+docker start web-server
+```
+
+### **3.3. Listing Containers**
+```bash
+docker ps
+docker ps -a
+```
+
+### **3.4. Removing Containers**
+```bash
+docker rm web-server
+docker rm $(docker ps -aq) # Remove all containers
+```
+
+---
+
+## **4. Interacting with Containers**
+
+### **4.1. Execute Commands Inside a Container**
+```bash
+docker exec -it web-server bash
+```
+- Access the shell of the running container.
+
+### **4.2. Inspect a Container**
+```bash
+docker inspect web-server
+```
+- View configuration details and metadata of the container.
+
+### **4.3. Viewing Logs**
+```bash
+docker logs web-server
+```
+
+---
+
+## **5. Expose Applications to the World**
+- Use `-p` or `-P` with the `docker run` command to expose container ports to the host.
+
+#### **Example:**
+```bash
+docker run -d -p 8080:80 nginx
+```
+- This exposes the container's port 80 to port 8080 on the host.
+
+---
+
+## **6. Troubleshooting Containers**
+
+### **6.1. Monitoring Resource Usage**
+```bash
+docker stats
+```
+
+### **6.2. Viewing Logs**
+```bash
+docker logs web-server
+```
+
+### **6.3. Copying Files**
+```bash
+docker cp web-server:/path/in/container /path/on/host
+```
+
+---
+
+## **7. Activities for Students**
+1. **Create a Container:**
+   - Run an NGINX container and access it via the browser.
+2. **Interact with a Container:**
+   - Execute a command inside a running container using `exec`.
+3. **Inspect a Container:**
+   - Use `docker inspect` to analyze metadata.
+4. **Experiment with Ports:**
+   - Expose different ports and test access.
+5. **Monitor Resource Usage:**
+   - Use `docker stats` to observe real-time resource utilization.
+
+---
+
+## **8. Additional Resources**
+- [Docker CLI Reference](https://docs.docker.com/engine/reference/commandline/docker/)
+- [Docker Container Management Guide](https://docs.docker.com/config/containers/)
+- [Docker Official Documentation](https://docs.docker.com/)
+
 
 
 
