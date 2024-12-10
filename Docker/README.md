@@ -76,4 +76,6 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
 
   ### Removing an Image
 ```
-docker rmi 
+docker rmi image name
+```
+
