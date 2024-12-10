@@ -80,5 +80,7 @@ docker rmi image name
 ```
 ### Saving and Loading Images
 ```
+docker save -o nginx_backup.tar nginx:latest
+```
 
 
