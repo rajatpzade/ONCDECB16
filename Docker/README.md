@@ -84,4 +84,7 @@ docker save -o nginx_backup.tar nginx:latest
 ```
 ### Load an Image
 ```
+docker load -i nginx_backup.tar
+```
+
 
