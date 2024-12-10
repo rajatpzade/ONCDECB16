@@ -59,3 +59,5 @@ docker pull ubuntu:20.04
 ```
 docker tag ubuntu:20.04 myrepo/ubuntu:v1
 ```
+### Pushing an Image
+
