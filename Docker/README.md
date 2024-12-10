@@ -74,4 +74,6 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
   docker push rajatpzade/web-server:latest 
   ```
 
+  ### Removing an Image
+
   
