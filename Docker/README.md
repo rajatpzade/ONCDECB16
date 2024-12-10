@@ -65,6 +65,7 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
   ``` 
   docker login -u rajatpzade 
   ```
+  
 - 2 Push the image
   ```
   docker push rajatpzade/ubuntu:v1
