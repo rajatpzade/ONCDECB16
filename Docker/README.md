@@ -92,5 +92,9 @@ docker load -i nginx_backup.tar
 docker image prune
 ```
 
+- Remove All Unused Images
+```
+docker image prune -a
+```
 
 
