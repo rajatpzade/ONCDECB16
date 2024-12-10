@@ -67,8 +67,7 @@ docker tag ubuntu:20.04 myrepo/ubuntu:v1
   ```
 - 2 Tag to Image
 ```
-   docker tag nginx:latest rajatpzade/web- 
-     server:latest
+   docker tag nginx:latest rajatpzade/web-server:latest
   ```  
 - 2 Push the image
   ```
