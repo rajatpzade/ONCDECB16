@@ -54,4 +54,5 @@ Docker images are lightweight, standalone packages that include all necessary de
 docker pull ubuntu:20.04
 ```
 
-### 
+### Tagging an Image
+
