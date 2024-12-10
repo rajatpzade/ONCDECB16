@@ -1,5 +1,100 @@
 # Introduction to docker commands
  
+ # Day 6: Introduction to Docker
+
+## Topics Covered:
+
+### 1. Difference between Monolithic and Microservices
+- **Monolithic Applications:**
+  - Single codebase for all functionalities.
+  - Difficult to scale and maintain.
+  - Example: Traditional applications where all features are tightly coupled.
+
+- **Microservices:**
+  - Application is divided into smaller, independent services.
+  - Easier to scale and maintain.
+  - Example: E-commerce application with separate services for inventory, payments, and shipping.
+
+### 2. Difference between Traditional, Virtualization, and Containerization Deployment
+- **Traditional Deployment:**
+  - Applications run on physical servers.
+  - No isolation, resource contention issues.
+
+- **Virtualization:**
+  - Uses hypervisors to run multiple virtual machines on a single server.
+  - Each VM has its own OS and resources.
+
+- **Containerization:**
+  - Uses containers to package applications with their dependencies.
+  - Lightweight and efficient compared to VMs.
+
+### 3. Introduction to Containerization, Containers, and Images
+- **Containerization:**
+  - Technology to run applications in isolated environments called containers.
+
+- **Container:**
+  - Lightweight, standalone, executable package of software.
+
+- **Image:**
+  - Blueprint for containers, containing application code and dependencies.
+
+### 4. Introduction to Docker
+- **Docker:**
+  - Open-source platform for developing, shipping, and running applications.
+  - Enables containerization.
+
+### 5. Difference between Docker CE and Docker EE
+- **Docker Community Edition (CE):**
+  - Free and open-source.
+  - Suitable for individual developers and small teams.
+
+- **Docker Enterprise Edition (EE):**
+  - Paid version with advanced security, management, and support features.
+  - Suitable for enterprises.
+
+### 6. Install Docker Engine
+- **Installation Steps:**
+  - Update your system: `sudo apt-get update`
+  - Install prerequisites: `sudo apt-get install apt-transport-https ca-certificates curl software-properties-common`
+  - Add Docker's GPG key: `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
+  - Set up the Docker repository: `echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
+  - Install Docker: `sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io`
+  - Verify installation: `docker --version`
+
+### 7. Run First Container
+- **Command to Run:**
+  ```bash
+  docker run hello-world
+  ```
+- **Explanation:**
+  - Pulls the `hello-world` image if not present.
+  - Creates and runs a container from the image.
+
+## Practical Examples:
+
+### Example 1: Running a Simple Container
+```bash
+docker run ubuntu echo "Hello, Docker!"
+```
+
+### Example 2: Listing Running Containers
+```bash
+docker ps
+```
+
+### Example 3: Stopping a Container
+```bash
+docker stop <container_id>
+```
+
+### Example 4: Removing a Container
+```bash
+docker rm <container_id>
+```
+
+## References
+- [Docker Documentation](https://docs.docker.com/)
+
 
 # **Day 7: Docker Container Management**
 
