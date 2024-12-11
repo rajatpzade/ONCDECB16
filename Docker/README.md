@@ -432,8 +432,10 @@ sudo docker run --network my_bridge_network --name my_container -d nginx
    ```bash
    sudo docker network rm my_custom_network
    ```
-5. Stop All Conatiner**   
-5. **How to delete all conatiner:**
+5. **Stop All Conatiner**
+   ```
+      
+6. **How to delete all conatiner:**
    ```
    docker rm $(docker ps -aq)
    ```
