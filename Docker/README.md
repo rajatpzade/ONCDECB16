@@ -419,6 +419,7 @@ sudo docker run --network my_bridge_network --name my_container -d nginx
    ```bash
    sudo docker run --network my_custom_network --name container1 -d nginx
    sudo docker run --network my_custom_network --name container2 -d nginx
+   docker network create --subnet "192.168.0.0/16" --driver bridge newnetwork
    ```
 
 3. **Verify network communication:**
@@ -434,7 +435,7 @@ sudo docker run --network my_bridge_network --name my_container -d nginx
    ```
    docker rm $(docker ps -aq)
    ```
-   
+
 ---
 
 By understanding and leveraging Docker networking, you can build robust, scalable, and secure containerized applications.
