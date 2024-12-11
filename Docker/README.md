@@ -434,6 +434,8 @@ sudo docker run --network my_bridge_network --name my_container -d nginx
    ```
 5. **Stop All Conatiner**
    ```
+   docker stop $(docker ps -aq)
+   ```
       
 6. **How to delete all conatiner:**
    ```
