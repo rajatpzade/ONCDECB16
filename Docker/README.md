@@ -430,7 +430,8 @@ sudo docker run --network my_bridge_network --name my_container -d nginx
    ```bash
    sudo docker network rm my_custom_network
    ```
-5. **
+5. **How to delete all conatiner:**
+   
 ---
 
 By understanding and leveraging Docker networking, you can build robust, scalable, and secure containerized applications.
