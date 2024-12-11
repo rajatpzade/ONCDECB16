@@ -1,6 +1,6 @@
 # Introduction to docker commands
  
- # Day 6: Introduction to Docker
+ # : Introduction to Docker
 
 ## Topics Covered:
 
@@ -96,7 +96,7 @@ docker rm <container_id>
 - [Docker Documentation](https://docs.docker.com/)
 
 
-# **Day 7: Docker Container Management**
+# **: Docker Container Management**
 
 ---
 
@@ -233,7 +233,7 @@ docker cp web-server:/path/in/container /path/on/host
 
 # **Docker Images and Image Management**
 
-## **Day 8: Docker Training**
+## **: Docker Training**
 
 ---
 
@@ -326,5 +326,114 @@ docker image prune
 ```
 docker image prune -a
 ```
+
+
+-----
+
+# Introduction to Docker Network
+
+Docker networking allows containers to communicate with each other, the host system, and external networks. It plays a vital role in enabling microservices and distributed applications to function seamlessly.
+
+---
+
+## Different Network Drivers
+
+Docker provides several network drivers for various use cases. Each driver is optimized for different network configurations and scenarios:
+
+1. **Bridge Network**  
+   - Default network driver for containers.
+   - Containers connected to the same bridge network can communicate with each other.
+   - Suitable for standalone containers.
+
+2. **Host Network**  
+   - Removes network isolation between the container and the host.
+   - The container shares the host's network stack.
+   - Useful for performance-critical applications but reduces isolation.
+
+3. **None Network**  
+   - No networking for the container.
+   - Completely isolated from the host and other containers.
+
+4. **Overlay Network**  
+   - Enables communication between containers across multiple hosts.
+   - Used in Docker Swarm or Kubernetes environments.
+   - Ideal for distributed applications.
+
+5. **Macvlan Network**  
+   - Assigns a MAC address to the container, making it appear as a physical device on the network.
+   - Provides direct layer 2 access for containers.
+
+6. **Custom Network Plugins**  
+   - Allows integration of third-party or custom networking solutions.
+
+---
+
+## Docker Network Commands
+
+### Create a Network
+```bash
+# Create a custom bridge network
+sudo docker network create my_bridge_network
+
+# Create an overlay network
+sudo docker network create --driver overlay my_overlay_network
+```
+
+### List Networks
+```bash
+# View all available networks
+sudo docker network ls
+```
+
+### Inspect a Network
+```bash
+# Inspect details of a specific network
+sudo docker network inspect my_bridge_network
+```
+
+### Remove a Network
+```bash
+# Remove a specific network
+sudo docker network rm my_bridge_network
+```
+
+---
+
+## Run Containers with Specific Network
+```bash
+# Run a container attached to a specific network
+sudo docker run --network my_bridge_network --name my_container -d nginx
+```
+
+---
+
+## Practical Steps
+
+### Example: Create and Use a Custom Bridge Network
+1. **Create a custom bridge network:**
+   ```bash
+   sudo docker network create my_custom_network
+   ```
+
+2. **Run containers in the custom network:**
+   ```bash
+   sudo docker run --network my_custom_network --name container1 -d nginx
+   sudo docker run --network my_custom_network --name container2 -d nginx
+   ```
+
+3. **Verify network communication:**
+   ```bash
+   sudo docker exec -it container1 ping container2
+   ```
+
+4. **Delete the network:**
+   ```bash
+   sudo docker network rm my_custom_network
+   ```
+
+---
+
+By understanding and leveraging Docker networking, you can build robust, scalable, and secure containerized applications.
+
 
 
