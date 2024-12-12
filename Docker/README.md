@@ -591,3 +591,9 @@ Docker volumes are a persistent storage mechanism used to store data generated b
 
 This tutorial provides an overview of Docker Volumes and demonstrates how to manage them effectively. Practice these commands to gain confidence in handling data persistence and sharing in Docker environments.
 
+
+
+
+Introduction to Dockerfile
+FROM, LABEL, RUN, CMD, ENTRYPOINT, ENV, ARG, COPY, ADD, EXPOSE, USER, WORKDIR
+Docker build, push, pull
