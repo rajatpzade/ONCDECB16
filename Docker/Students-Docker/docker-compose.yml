@@ -6,9 +6,9 @@ services:
    container_name: mysql
    restart: always
    environment:
-    MYSQL_ROOT_PASSWORD: 1234
-    MYSQL_DATABASE: studentapp
-  volumes:
+     MYSQL_ROOT_PASSWORD: 1234
+     MYSQL_DATABASE: studentapp
+    volumes:
     - mysql_data:/var/lib/mysql
     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   ports:
