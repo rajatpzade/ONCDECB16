@@ -2,17 +2,19 @@ version: "3.8"
 
 services:
   mysql:
-   image: mysql:latest
-   container_name: mysql
-   restart: always
-   environment:
-     MYSQL_ROOT_PASSWORD: 1234
-     MYSQL_DATABASE: studentapp
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: studentapp
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1234
     volumes:
-    - mysql_data:/var/lib/mysql
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-  ports:
-    - "3306:3306"
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
 
   backend:
     build:
