@@ -8,8 +8,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: studentapp
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 1234
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -27,6 +25,9 @@ services:
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 1234
+      DB_NAME: studentapp
 
   frontend:
     build:
@@ -37,4 +38,3 @@ services:
 
 volumes:
   mysql_data:
-
