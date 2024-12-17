@@ -743,3 +743,182 @@ CMD ["npm", "start"]
 - Use multi-stage builds for optimizing large images.
 - Test the Dockerfile thoroughly to ensure proper functionality of the image.
 
+--------
+# Brief Introduction to Docker Compose
+
+Docker Compose is a tool that allows you to define and run multi-container Docker applications using a simple YAML file. With Docker Compose, you can configure and launch your entire application stack, including services, networks, and volumes, in a single command.
+
+## Key Features of Docker Compose:
+1. **Single Configuration**: Define all services in a single `docker-compose.yml` file.
+2. **Multi-Container Management**: Orchestrates multiple containers that form an application.
+3. **Easy to Use**: Simple commands like `docker-compose up` and `docker-compose down` for deployment and teardown.
+4. **Scalable**: Allows scaling individual services.
+
+---
+
+# Deploy a Three-Tier Application Using Docker Compose
+
+In this example, we will deploy a **three-tier application** using Docker Compose. The three tiers include:
+1. **Frontend**: Angular application (UI layer).
+2. **Backend**: Spring Boot application (business logic layer).
+3. **Database**: MySQL (data layer).
+
+## Prerequisites:
+- Install **Docker** and **Docker Compose** on your machine.
+- Basic understanding of Docker and containers.
+
+---
+
+## Step 1: Directory Structure
+
+Create a project directory and organize it as follows:
+```bash
+three-tier-app/
+│   docker-compose.yml
+│
+├── frontend/
+│   └── Dockerfile
+│
+├── backend/
+│   └── Dockerfile
+│
+└── database/
+    └── init.sql
+```
+
+---
+
+## Step 2: Dockerfile for Each Service
+
+### 1. **Database** (MySQL):
+- Place the following `init.sql` file in the `database/` folder to initialize the database.
+
+#### `database/init.sql`
+```sql
+CREATE DATABASE studentdb;
+USE studentdb;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    age INT
+);
+
+INSERT INTO students (name, email, age) VALUES ('John Doe', 'john@example.com', 22);
+```
+
+### 2. **Backend** (Spring Boot):
+- Use this `Dockerfile` to build the Spring Boot application.
+
+#### `backend/Dockerfile`
+```dockerfile
+# Use Maven to build the application
+FROM maven:3.8.4-openjdk-11 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Run the application
+FROM openjdk:11-jre-slim
+WORKDIR /app
+COPY --from=build /app/target/spring-backend.jar /app/spring-backend.jar
+EXPOSE 8080
+CMD ["java", "-jar", "spring-backend.jar"]
+```
+
+### 3. **Frontend** (Angular):
+- Use this `Dockerfile` to serve the Angular frontend.
+
+#### `frontend/Dockerfile`
+```dockerfile
+# Use Node.js to build Angular application
+FROM node:14 AS build
+WORKDIR /app
+COPY . .
+RUN npm install && npm run build --prod
+
+# Serve the Angular app
+FROM nginx:alpine
+COPY --from=build /app/dist/ /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+---
+
+## Step 3: Docker Compose Configuration
+
+Create a `docker-compose.yml` file in the project root directory to define all three services.
+
+#### `docker-compose.yml`
+```yaml
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: studentdb
+      MYSQL_USER: student
+      MYSQL_PASSWORD: student123
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+
+  backend:
+    build: ./backend
+    container_name: backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/studentdb
+      SPRING_DATASOURCE_USERNAME: student
+      SPRING_DATASOURCE_PASSWORD: student123
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+```
+
+---
+
+## Step 4: Build and Run the Application
+
+1. **Navigate** to the project root directory.
+   ```bash
+   cd three-tier-app
+   ```
+2. **Build and Start** the services using Docker Compose.
+   ```bash
+   docker-compose up --build
+   ```
+3. **Verify the Deployment**:
+   - **Database**: Accessible on `localhost:3306`.
+   - **Backend**: Accessible on `localhost:8080`.
+   - **Frontend**: Accessible on `localhost:80`.
+
+---
+
+## Step 5: Test the Application
+
+1. Open a browser and visit `http://localhost` to access the Angular frontend.
+2. Verify the backend API by visiting `http://localhost:8080`.
+3. Ensure the database connection is working by viewing the student data populated in the backend.
+
+---
+
+## Conclusion
+
+By using Docker Compose, you can deploy a three-tier application seamlessly with just a single configuration file. This setup ensures that the frontend, backend, and database tiers work together as a unified application.
+
+Happy Learning! 🚀
