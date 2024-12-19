@@ -320,3 +320,9 @@ For Role name, enter a unique name for your role, such as eksClusterRole.
 For Description, enter descriptive text such as Amazon EKS - Cluster role.
 
 Choose Create role.
+
+----
+
+Amazon EKS node IAM role
+
+-
