@@ -297,3 +297,26 @@ This guide provides a comprehensive understanding of EKS cluster creation, kubec
 ----
 
 Amazon EKS cluster IAM role
+
+Creating the Amazon EKS cluster role
+
+You can use the AWS Management Console or the AWS CLI to create the cluster role.
+
+AWS Management Console
+Open the IAM console at https://console.aws.amazon.com/iam/.
+
+Choose Roles, then Create role.
+
+Under Trusted entity type, select AWS service.
+
+From the Use cases for other AWS services dropdown list, choose EKS.
+
+Choose EKS - Cluster for your use case, and then choose Next.
+
+On the Add permissions tab, choose Next.
+
+For Role name, enter a unique name for your role, such as eksClusterRole.
+
+For Description, enter descriptive text such as Amazon EKS - Cluster role.
+
+Choose Create role.
