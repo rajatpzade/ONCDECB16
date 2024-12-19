@@ -371,3 +371,6 @@ Under Add tags (Optional), add metadata to the role by attaching tags as key-val
 
 Choose Create role.
 
+-----
+Amazon EKS Auto Mode cluster IAM role
+
