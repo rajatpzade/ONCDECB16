@@ -326,3 +326,48 @@ Choose Create role.
 Amazon EKS node IAM role
 
 -
+Creating the Amazon EKS node IAM role
+
+You can create the node IAM role with the AWS Management Console or the AWS CLI.
+
+AWS Management Console
+Open the IAM console at https://console.aws.amazon.com/iam/.
+
+In the left navigation pane, choose Roles.
+
+On the Roles page, choose Create role.
+
+On the Select trusted entity page, do the following:
+
+In the Trusted entity type section, choose AWS service.
+
+Under Use case, choose EC2.
+
+Choose Next.
+
+On the Add permissions page, attach a custom policy or do the following:
+
+In the Filter policies box, enter AmazonEKSWorkerNodePolicy.
+
+Select the check box to the left of AmazonEKSWorkerNodePolicy in the search results.
+
+Choose Clear filters.
+
+In the Filter policies box, enter AmazonEC2ContainerRegistryPullOnly.
+
+Select the check box to the left of AmazonEC2ContainerRegistryPullOnly in the search results.
+
+Either the AmazonEKS_CNI_Policy managed policy, or an IPv6 policy that you create must also be attached to either this role or to a different role that’s mapped to the aws-node Kubernetes service account. We recommend assigning the policy to the role associated to the Kubernetes service account instead of assigning it to this role. For more information, see Configure Amazon VPC CNI plugin to use IRSA.
+
+Choose Next.
+
+On the Name, review, and create page, do the following:
+
+For Role name, enter a unique name for your role, such as AmazonEKSNodeRole.
+
+For Description, replace the current text with descriptive text such as Amazon EKS - Node role.
+
+Under Add tags (Optional), add metadata to the role by attaching tags as key-value pairs. For more information about using tags in IAM, see Tagging IAM resources in the IAM User Guide.
+
+Choose Create role.
+
