@@ -83,3 +83,4 @@ Responsible for running application workloads. Components include:
 ## Conclusion
 Kubernetes simplifies the management of containerized applications in complex environments. Understanding its architecture and lifecycle is fundamental for effectively deploying and managing workloads. Additionally, selecting the right cluster creation method depends on your use case, whether it’s local development or production deployment.
 
+--
