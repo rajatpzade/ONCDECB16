@@ -294,3 +294,6 @@ An auxiliary container that provides supporting functionalities, such as logging
 ## Conclusion
 This guide provides a comprehensive understanding of EKS cluster creation, kubectl usage, and managing Pods, including advanced topics like sidecar containers. Mastery of these concepts is crucial for orchestrating containerized workloads effectively.
 
+----
+
+Amazon EKS cluster IAM role
