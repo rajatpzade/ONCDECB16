@@ -238,7 +238,7 @@ eksctl delete cluster --name demo-ekscluster --region us-east-1
 
 By following the steps above, you can successfully create, manage, and delete an Amazon EKS cluster using CLI tools like `eksctl` and `kubectl`. Ensure to clean up resources when they are no longer needed to avoid unnecessary charges.
 
-
+  
 ---
 
 ## Introduction to Pods and Services
