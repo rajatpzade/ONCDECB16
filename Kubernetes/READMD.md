@@ -119,29 +119,125 @@ Amazon Elastic Kubernetes Service (EKS) simplifies the process of running Kubern
 
 ---
 
-## Install kubectl and Access the EKS Cluster
+# Create Amazon EKS Cluster Using CLI
 
-1. **Install kubectl**:
-   - On Linux:
-     ```bash
-     curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/latest/bin/linux/amd64/kubectl
-     chmod +x ./kubectl
-     sudo mv ./kubectl /usr/local/bin
-     ```
-   - Verify installation:
-     ```bash
-     kubectl version --client
-     ```
+This guide provides step-by-step instructions for setting up and managing an Amazon EKS cluster using the CLI. We will cover the installation of necessary tools and the creation of an EKS cluster.
 
-2. **Configure kubectl for EKS**:
-   - Update your kubeconfig file:
-     ```bash
-     aws eks --region us-west-2 update-kubeconfig --name my-cluster
-     ```
-   - Test connection:
-     ```bash
-     kubectl get svc
-     ```
+---
+
+## Step 1: Install `eksctl`
+
+`eksctl` is a simple CLI tool for creating and managing Kubernetes clusters on Amazon EKS.
+
+```bash
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+
+# Verify installation
+eksctl version
+```
+
+---
+
+## Step 2: Install `kubectl`
+
+`kubectl` is the Kubernetes command-line tool used to interact with Kubernetes clusters.
+
+### Download and Verify `kubectl`
+
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+```
+
+### Install `kubectl`
+
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# Alternatively, install in local directory
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+
+# Verify installation
+kubectl version --client
+```
+
+---
+
+## Step 3: Install AWS CLI
+
+The AWS Command Line Interface (CLI) is used to manage AWS services from the command line.
+
+### Download and Install AWS CLI
+
+```bash
+sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+### Configure AWS CLI
+
+```bash
+aws configure
+```
+You will be prompted to enter your AWS access key, secret key, region, and output format.
+
+---
+
+## Step 4: Create an EKS Cluster
+
+Use `eksctl` to create an Amazon EKS cluster with the desired configuration.
+
+### Create Cluster Command
+
+```bash
+eksctl create cluster \
+  --name demo-ekscluster \
+  --region us-east-1 \
+  --version 1.27 \
+  --nodegroup-name linux-nodes \
+  --node-type t2.micro \
+  --nodes 2
+```
+- **`--name`**: Specifies the name of the cluster.
+- **`--region`**: AWS region where the cluster will be created.
+- **`--version`**: Kubernetes version.
+- **`--nodegroup-name`**: Name of the node group.
+- **`--node-type`**: Instance type for the nodes.
+- **`--nodes`**: Number of nodes in the cluster.
+
+---
+
+## Step 5: Update `kubeconfig`
+
+Once the cluster is created, update the `kubeconfig` file to interact with the cluster.
+
+```bash
+aws eks update-kubeconfig --name demo-ekscluster
+```
+
+---
+
+## Step 6: Delete the EKS Cluster
+
+If the cluster is no longer needed, it can be deleted using the following command:
+
+```bash
+eksctl delete cluster --name demo-ekscluster --region us-east-1
+```
+
+---
+
+## Conclusion
+
+By following the steps above, you can successfully create, manage, and delete an Amazon EKS cluster using CLI tools like `eksctl` and `kubectl`. Ensure to clean up resources when they are no longer needed to avoid unnecessary charges.
+
 
 ---
 
