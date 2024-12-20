@@ -374,3 +374,182 @@ Choose Create role.
 -----
 Amazon EKS Auto Mode cluster IAM role
 
+---
+# Orchestration Tool: Kubernetes
+
+## Kubernetes Networking: Intra-Pod and Inter-Pod Communication
+
+Kubernetes networking is fundamental for ensuring smooth communication between various components, including pods, services, and external clients. It provides flexible networking configurations for intra-pod and inter-pod communication.
+
+### Intra-Pod Communication
+- **Definition**: Intra-pod communication refers to the communication between containers within the same pod.
+- **Mechanism**: Containers in a pod share the same network namespace, which means they:
+  - Share the same IP address.
+  - Can communicate directly using `localhost` and exposed container ports.
+
+#### Example:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+spec:
+  containers:
+  - name: main-container
+    image: nginx
+    ports:
+    - containerPort: 80
+  - name: sidecar-container
+    image: redis
+    ports:
+    - containerPort: 6379
+```
+In this example:
+- The `main-container` and `sidecar-container` share the same IP address.
+- The `main-container` can access Redis by connecting to `localhost:6379`.
+
+### Inter-Pod Communication
+- **Definition**: Inter-pod communication refers to the communication between pods.
+- **Mechanism**:
+  - Kubernetes assigns each pod a unique IP address.
+  - Pods communicate directly using these IP addresses or via Kubernetes services.
+  - Kubernetes ensures a flat network model where all pods can communicate without NAT.
+
+#### Example:
+- Pod A wants to access Pod B:
+  - Pod A connects to Pod B's IP and exposed port directly.
+  - Alternatively, Pod A connects via a Kubernetes service for Pod B.
+
+### Kubernetes Service Types for Networking
+
+#### 1. **ClusterIP**
+- Default service type.
+- Exposes the service only within the cluster.
+- Example:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-service
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```
+
+#### 2. **NodePort**
+- Exposes the service on a static port on each node.
+- Example:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-service
+spec:
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    nodePort: 30007
+```
+
+#### 3. **LoadBalancer**
+- Exposes the service externally using a cloud provider’s load balancer.
+- Example:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```
+
+## Key Networking Components
+
+### 1. Pod IP
+- Each pod gets a unique IP address within the cluster.
+- Enables direct communication between pods without port conflicts.
+
+### 2. Container Port
+- The port exposed by the container inside the pod.
+- Used for intra-pod communication.
+
+### 3. Node IP
+- IP address of the Kubernetes node.
+- Used when accessing services exposed via NodePort or LoadBalancer.
+
+### 4. Node Port
+- A static port on the node that forwards traffic to the service.
+- Example: Node IP + Node Port allows access to services from outside the cluster.
+
+### 5. LoadBalancer
+- Integrates with cloud provider load balancers to expose services externally.
+- Automatically assigns external IPs for access.
+
+## Examples
+
+### Accessing a Pod Directly
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+```
+- Accessing directly via Pod IP:
+  - `curl <POD_IP>:80`
+
+### Accessing a Service via NodePort
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nodeport-service
+spec:
+  type: NodePort
+  selector:
+    app: my-app
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30001
+```
+- Access:
+  - `http://<NODE_IP>:30001`
+
+### Accessing a Service via LoadBalancer
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-loadbalancer-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-app
+  ports:
+  - port: 80
+    targetPort: 8080
+```
+- Access:
+  - External IP provided by the load balancer.
+  - `http://<EXTERNAL_IP>:80`
+
