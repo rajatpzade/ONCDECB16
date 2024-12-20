@@ -296,6 +296,80 @@ This guide provides a comprehensive understanding of EKS cluster creation, kubec
 
 ----
 
+# Amazon EKS IAM Roles Guide
+
+## Amazon EKS Cluster IAM Role
+
+### Creating the Amazon EKS Cluster Role
+
+#### Using the AWS Management Console
+
+1. Open the IAM console at [IAM Console](https://console.aws.amazon.com/iam/).
+2. In the left navigation pane, choose **Roles**, then select **Create role**.
+3. Under **Trusted entity type**, select **AWS service**.
+4. From the **Use cases for other AWS services** dropdown list, choose **EKS**.
+5. Choose **EKS - Cluster** for your use case, and then select **Next**.
+6. On the **Add permissions** tab, click **Next**.
+7. For **Role name**, enter a unique name for your role, such as `eksClusterRole`.
+8. For **Description**, enter descriptive text such as `Amazon EKS - Cluster role`.
+9. Choose **Create role**.
+
+---
+
+## Amazon EKS Node IAM Role
+
+### Creating the Amazon EKS Node IAM Role
+
+#### Using the AWS Management Console
+
+1. Open the IAM console at [IAM Console](https://console.aws.amazon.com/iam/).
+2. In the left navigation pane, select **Roles**.
+3. On the **Roles** page, choose **Create role**.
+4. On the **Select trusted entity** page, do the following:
+   - In the **Trusted entity type** section, choose **AWS service**.
+   - Under **Use case**, choose **EC2**.
+   - Click **Next**.
+5. On the **Add permissions** page, do the following:
+   - In the **Filter policies** box, enter `AmazonEKSWorkerNodePolicy`.
+   - Select the checkbox to the left of **AmazonEKSWorkerNodePolicy** in the search results.
+   - Choose **Clear filters**.
+   - In the **Filter policies** box, enter `AmazonEC2ContainerRegistryPullOnly`.
+   - Select the checkbox to the left of **AmazonEC2ContainerRegistryPullOnly** in the search results.
+   - Optionally, attach either the **AmazonEKS_CNI_Policy** managed policy or an IPv6 policy you create. We recommend assigning this policy to the role associated with the Kubernetes service account instead of this role. For more information, see [Configure Amazon VPC CNI plugin to use IRSA](https://docs.aws.amazon.com/eks/latest/userguide/cni-iam-role.html).
+6. Choose **Next**.
+7. On the **Name, review, and create** page, do the following:
+   - For **Role name**, enter a unique name for your role, such as `AmazonEKSNodeRole`.
+   - For **Description**, enter descriptive text such as `Amazon EKS - Node role`.
+   - Optionally, add metadata to the role by attaching tags as key-value pairs. For more information, see [Tagging IAM resources in the IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html).
+8. Choose **Create role**.
+
+---
+
+## Amazon EKS Auto Mode Cluster IAM Role
+
+### Overview
+When using Amazon EKS in **Auto Mode**, an IAM role is required to manage your EKS cluster seamlessly. Follow these steps to create and configure this role.
+
+#### Using the AWS Management Console
+
+1. Navigate to the IAM console at [IAM Console](https://console.aws.amazon.com/iam/).
+2. Choose **Roles**, then select **Create role**.
+3. Under **Trusted entity type**, select **AWS service**.
+4. From the **Use cases for other AWS services** dropdown, choose **EKS**.
+5. Select **EKS - Cluster** as the use case and proceed by clicking **Next**.
+6. On the **Add permissions** page, attach any additional policies needed for managing your Auto Mode cluster or click **Next** if none are required.
+7. On the **Name, review, and create** page, complete the following:
+   - Assign a unique name, such as `eksAutoModeClusterRole`.
+   - Provide a description, such as `IAM role for managing EKS Auto Mode cluster`.
+8. Click **Create role**.
+
+---
+
+## Additional Notes
+- For both **Cluster** and **Node** roles, ensure you follow AWS best practices by assigning only the necessary permissions to reduce security risks.
+- Regularly audit your IAM roles and policies to ensure compliance with your organization’s security guidelines.
+- For more information, refer to the [Amazon EKS User Guide](https://docs.aws.amazon.com/eks/latest/userguide/).
+
 
 
 ---
