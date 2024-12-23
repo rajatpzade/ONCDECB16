@@ -647,3 +647,154 @@ spec:
   - External IP provided by the load balancer.
   - `http://<EXTERNAL_IP>:80`
 
+----
+
+# Introduction to YAML Scripts and Kubernetes Manifest Files
+
+## Understanding YAML Scripts
+YAML (YAML Ain't Markup Language) is a human-readable data serialization format used extensively in Kubernetes for writing manifest files. It is used to define resources like Pods, Services, Deployments, and more.
+
+### Key Features of YAML
+- **Readable**: YAML is simple and easy to understand.
+- **Indentation-Based**: Proper indentation is crucial.
+- **Data Types**: Supports scalars (strings, numbers), lists, and dictionaries.
+
+### Example YAML Structure
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+```
+
+## Writing Manifest Files for Pods and Services
+Kubernetes uses manifest files to describe the desired state of resources in the cluster. These files are written in YAML.
+
+### Pod Manifest File
+A Pod is the smallest deployable unit in Kubernetes.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+```
+**Explanation**:
+- `apiVersion`: The API version used (e.g., v1).
+- `kind`: The type of resource (e.g., Pod).
+- `metadata`: Metadata such as the name and labels.
+- `spec`: Specification of the Pod, including containers and their properties.
+
+### Service Manifest File
+Services expose Pods to the network and enable communication between them.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+```
+**Explanation**:
+- `selector`: Matches the labels of the Pods to be exposed.
+- `ports`: Defines the service port and the target port on the Pod.
+- `type`: Specifies the service type (e.g., ClusterIP, NodePort).
+
+## Namespace
+Namespaces provide a way to divide cluster resources between multiple users or teams.
+
+### Default Namespaces
+- **default**: The default namespace for resources without a namespace.
+- **kube-system**: For Kubernetes system resources.
+- **kube-public**: For publicly accessible resources.
+
+### Creating a Namespace
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-namespace
+```
+
+## ReplicationController and ReplicaSet
+ReplicationControllers and ReplicaSets ensure that the specified number of Pod replicas are running at all times.
+
+### ReplicationController
+```yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-rc
+spec:
+  replicas: 3
+  selector:
+    app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-container
+          image: nginx:latest
+```
+**Explanation**:
+- `replicas`: Specifies the desired number of Pods.
+- `selector`: Matches labels to identify Pods.
+- `template`: Describes the Pods to be created.
+
+### ReplicaSet
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-container
+          image: nginx:latest
+```
+**Explanation**:
+- `matchLabels`: Provides a more flexible way of selecting Pods.
+
+### Differences Between ReplicationController and ReplicaSet
+| Feature               | ReplicationController                  | ReplicaSet                          |
+|-----------------------|----------------------------------------|-------------------------------------|
+| **Selector**          | Uses equality-based selectors only.   | Supports set-based and equality-based selectors. |
+| **Flexibility**       | Limited in matching Pods.             | More flexible in selecting Pods based on labels. |
+| **Usage**             | Older method, being phased out.       | Preferred in modern deployments.   |
+
+## Conclusion
+Understanding YAML scripts and Kubernetes resources like Namespaces, ReplicationControllers, and ReplicaSets is fundamental for managing workloads effectively. ReplicaSets provide enhanced capabilities and are generally preferred for production use.
