@@ -5,7 +5,8 @@ metadata:
   labels:
     name: myapp
 spec:
-  containers:- name: myapp
+  containers:
+- name: myapp
     image: <Image>
     resources:
       limits:
