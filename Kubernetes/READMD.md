@@ -798,3 +798,181 @@ spec:
 
 ## Conclusion
 Understanding YAML scripts and Kubernetes resources like Namespaces, ReplicationControllers, and ReplicaSets is fundamental for managing workloads effectively. ReplicaSets provide enhanced capabilities and are generally preferred for production use.
+
+-----
+
+# Deployments vs StatefulSets, Writing Manifests, and Understanding DaemonSets
+
+## Introduction
+In Kubernetes, different controllers manage specific workloads depending on the requirements of applications. Among the most commonly used are Deployments, StatefulSets, and DaemonSets. Each serves unique purposes in orchestrating containerized applications.
+
+---
+
+## Deployments vs StatefulSets
+
+### Deployments
+A **Deployment** ensures a specified number of pod replicas are running at any given time. Deployments are best suited for stateless applications.
+
+#### Features of Deployments
+- Stateless nature, meaning all pods are interchangeable.
+- Easy scaling and updates with zero downtime.
+- Fast rollback capability.
+- Pods are recreated with new identities upon termination.
+
+#### Use Cases
+- Web servers.
+- APIs.
+- Microservices with no data dependency.
+
+### StatefulSets
+A **StatefulSet** is used for applications requiring unique identities and persistent storage for each pod. These are suited for stateful applications.
+
+#### Features of StatefulSets
+- Maintains a stable identity for each pod.
+- Supports persistent storage using PVCs (PersistentVolumeClaims).
+- Ensures ordered deployment, scaling, and deletion of pods.
+- Pod names are deterministic (e.g., `pod-0`, `pod-1`).
+
+#### Use Cases
+- Databases (e.g., MySQL, MongoDB).
+- Distributed systems (e.g., Kafka, ZooKeeper).
+- Applications requiring strict ordering.
+
+#### Key Differences Between Deployments and StatefulSets
+| Feature                | Deployment                 | StatefulSet              |
+|------------------------|----------------------------|--------------------------|
+| Nature                | Stateless                 | Stateful                |
+| Pod Identity          | Interchangeable           | Unique and Stable       |
+| Scaling Behavior      | Independent Pods          | Ordered Scaling         |
+| Storage               | Non-persistent            | Persistent Volumes      |
+| Update Strategy       | Rolling Updates           | Ordered Updates         |
+
+---
+
+## Writing Manifests
+
+### Manifest for a Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21.6
+        ports:
+        - containerPort: 80
+```
+
+### Manifest for a StatefulSet
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21.6
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+---
+
+## Understanding DaemonSets
+
+A **DaemonSet** ensures that a copy of a specific pod runs on all or selected nodes within a cluster. DaemonSets are typically used for system-level applications.
+
+### Features of DaemonSets
+- Runs one pod per node.
+- Automatically schedules pods on newly added nodes.
+- Ensures uninterrupted system monitoring and logging.
+
+### Use Cases
+- Log collection (e.g., Fluentd, Logstash).
+- Monitoring (e.g., Prometheus Node Exporter).
+- Network plugins (e.g., Calico, Weave).
+
+### Manifest for a DaemonSet
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+spec:
+  selector:
+    matchLabels:
+      app: node-exporter
+  template:
+    metadata:
+      labels:
+        app: node-exporter
+    spec:
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        ports:
+        - containerPort: 9100
+```
+
+---
+
+## Practical Notes for Students
+
+### Hands-On Steps
+1. **Deploying a Deployment**:
+   - Apply the Deployment manifest using `kubectl apply -f <deployment-manifest.yaml>`.
+   - Verify the pods using `kubectl get pods`.
+   - Scale the Deployment with `kubectl scale deployment nginx-deployment --replicas=5`.
+
+2. **Deploying a StatefulSet**:
+   - Apply the StatefulSet manifest using `kubectl apply -f <statefulset-manifest.yaml>`.
+   - Check pod identities using `kubectl get pods`.
+   - Ensure persistent storage by observing created PVCs with `kubectl get pvc`.
+
+3. **Deploying a DaemonSet**:
+   - Apply the DaemonSet manifest using `kubectl apply -f <daemonset-manifest.yaml>`.
+   - Verify one pod per node using `kubectl get pods -o wide`.
+
+### Troubleshooting Tips
+- For StatefulSets, check persistent volume status if pods fail to start.
+- Ensure proper node labeling when deploying DaemonSets for specific nodes.
+- Always test scaling and rolling updates to validate configurations.
+
+---
+
+By understanding and practicing these Kubernetes concepts, students can confidently manage real-world applications using Deployments, StatefulSets, and DaemonSets. For further clarification, explore the official Kubernetes documentation or try more complex setups.
