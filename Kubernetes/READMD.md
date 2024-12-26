@@ -974,11 +974,14 @@ spec:
       labels:
         app: node-exporter
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: node01
       containers:
       - name: node-exporter
         image: prom/node-exporter:latest
         ports:
         - containerPort: 9100
+
 ```
 
 ---
