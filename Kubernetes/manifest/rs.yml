@@ -16,6 +16,6 @@ spec:
       - name: my-pod-cont
         image: nginx
         ports:
-        - name: http 
+        - name: nginx 
           containerPort: 80
           protocol: TCP
