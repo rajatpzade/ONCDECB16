@@ -849,6 +849,20 @@ A **StatefulSet** is used for applications requiring unique identities and persi
 
 ---
 
+## Stateless vs Stateful Applications
+
+### Stateless Applications
+- Do not retain data between sessions.
+- Pods are interchangeable and can be terminated or replaced without affecting the application.
+- Example: A web server serving static pages.
+
+### Stateful Applications
+- Require data persistence and unique identities.
+- Replacement pods need to access the same persistent storage and retain their identities.
+- Example: A database like PostgreSQL where data must be retained even if the pod restarts.
+
+---
+
 ## Writing Manifests
 
 ### Manifest for a Deployment
@@ -910,6 +924,24 @@ spec:
         requests:
           storage: 1Gi
 ```
+
+---
+
+## Deployment Strategies
+
+### Recreate Strategy
+- Terminates all existing pods before creating new ones.
+- Suitable for non-critical updates.
+
+### Rolling Update Strategy
+- Updates pods incrementally.
+- Ensures minimal downtime and availability during updates.
+
+### Canary Deployment
+- Deploys a small subset of new pods alongside existing ones to test the update.
+
+### Blue-Green Deployment
+- Creates a new set of pods ("blue") while the old set ("green") remains active, enabling a smooth transition.
 
 ---
 
