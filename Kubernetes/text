@@ -3,3 +3,7 @@ manifest -> yaml
 
 pod
 service 
+rc
+ns
+rs
+depl
