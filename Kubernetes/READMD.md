@@ -981,7 +981,6 @@ spec:
         image: prom/node-exporter:latest
         ports:
         - containerPort: 9100
-
 ```
 
 ---
