@@ -1017,101 +1017,154 @@ By understanding and practicing these Kubernetes concepts, students can confiden
 
 ----
 
-# Kubernetes: ConfigMap, Secrets, and Persistent Storage
+# Kubernetes ConfigMap and Secret with Practical Steps
 
-## Introduction
-In Kubernetes, managing configuration data and storage are fundamental aspects of application deployment. ConfigMaps and Secrets allow you to decouple configuration data from your application code, while Persistent Volumes (PV) and Persistent Volume Claims (PVC) provide reliable storage solutions.
+This guide explains how to use ConfigMap and Secret resources in Kubernetes to manage configuration data and sensitive information. It includes step-by-step instructions, practical examples, and detailed notes for students.
 
 ---
 
-## Storing Variables using ConfigMap and Secrets
+## 1. Introduction
 
-### ConfigMap
-A **ConfigMap** is a Kubernetes resource used to store non-sensitive configuration data in key-value pairs. Applications can consume this data as environment variables, command-line arguments, or configuration files.
+### What is a ConfigMap?
+A **ConfigMap** is a Kubernetes resource used to store non-confidential data as key-value pairs. It helps decouple configuration data from application code.
 
-#### Features of ConfigMap
-- Decouples configuration data from application logic.
-- Facilitates environment-specific configuration management.
-- Supports reusability and scalability.
+### What is a Secret?
+A **Secret** is a Kubernetes resource designed to store confidential data, such as passwords or API keys, in a secure and encoded format. Secrets are encoded using Base64, providing a layer of obfuscation but not encryption.
 
-#### Manifest Example for ConfigMap
+### Why Use ConfigMap and Secret?
+- **Separation of Concerns:** Decouples configuration from application logic.
+- **Ease of Updates:** Configuration changes do not require rebuilding or redeploying applications.
+- **Security:** Secrets ensure sensitive data is handled securely.
+
+---
+
+## 2. Practical Steps
+
+### Step 1: Create the ConfigMap
+
+#### Manifest File
+Save the following content in a file named `configmap.yaml`:
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
-metadata:
-  name: app-config
-  namespace: default
+metadata: 
+  name: my-vars
 data:
-  APP_ENV: "production"
-  APP_DEBUG: "false"
+  DB_USER: "Admin"
+  DB_PASSWORD: "Redhat"
 ```
 
-#### Using ConfigMap in a Pod
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: configmap-demo
-spec:
-  containers:
-  - name: app-container
-    image: nginx
-    env:
-    - name: APP_ENV
-      valueFrom:
-        configMapKeyRef:
-          name: app-config
-          key: APP_ENV
-    - name: APP_DEBUG
-      valueFrom:
-        configMapKeyRef:
-          name: app-config
-          key: APP_DEBUG
+#### Apply the ConfigMap
+Run the following command to create the ConfigMap in your cluster:
+
+```bash
+kubectl apply -f configmap.yaml
 ```
 
-### Secrets
-A **Secret** is similar to ConfigMap but designed to store sensitive data like passwords, tokens, and keys.
+#### Verify the ConfigMap
+View the created ConfigMap:
 
-#### Features of Secrets
-- Stores base64-encoded sensitive data.
-- Supports tight access controls using RBAC.
-- Can be consumed as environment variables or volumes.
+```bash
+kubectl get configmap my-vars -o yaml
+```
 
-#### Manifest Example for Secret
+### Step 2: Create the Secret
+
+#### Manifest File
+Save the following content in a file named `secret.yaml`:
+
 ```yaml
 apiVersion: v1
 kind: Secret
-metadata:
-  name: db-credentials
-  namespace: default
-type: Opaque
+metadata: 
+  name: my-sec
 data:
-  username: bXl1c2Vy # base64 for "myuser"
-  password: bXlwYXNz # base64 for "mypass"
+  DB_USER: "QWRtaW4="       # Base64 encoded value of "Admin"
+  DB_PASSWORD: "UmVkaGF0"   # Base64 encoded value of "Redhat"
 ```
 
-#### Using Secret in a Pod
+#### Apply the Secret
+Run the following command to create the Secret in your cluster:
+
+```bash
+kubectl apply -f secret.yaml
+```
+
+#### Verify the Secret
+To check the Secret:
+
+```bash
+kubectl get secret my-sec -o yaml
+```
+
+Note: The values will appear base64-encoded. To decode, use:
+
+```bash
+echo "QWRtaW4=" | base64 --decode
+```
+
+---
+
+## 3. Using ConfigMap and Secret in a Pod
+
+### Example Pod Manifest
+
+Create a file named `pod-with-config-and-secret.yaml` with the following content:
+
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: secret-demo
+  name: pod-with-config-secret
 spec:
   containers:
-  - name: app-container
+  - name: test-container
     image: nginx
     env:
-    - name: DB_USERNAME
+    - name: DB_USER
       valueFrom:
-        secretKeyRef:
-          name: db-credentials
-          key: username
+        configMapKeyRef:
+          name: my-vars
+          key: DB_USER
     - name: DB_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: db-credentials
-          key: password
+          name: my-sec
+          key: DB_PASSWORD
 ```
+
+### Apply the Pod Manifest
+
+```bash
+kubectl apply -f pod-with-config-and-secret.yaml
+```
+
+### Verify the Pod Environment Variables
+
+```bash
+kubectl exec pod-with-config-secret -- printenv | grep DB_
+```
+
+---
+
+## 4. Notes and Best Practices
+
+### ConfigMap Notes
+1. **Non-Confidential Data:** ConfigMaps should not store sensitive data.
+2. **Dynamic Updates:** ConfigMaps can be updated dynamically, and changes can reflect in running Pods if the configuration is mounted as a volume.
+3. **Avoid Overloading:** Use ConfigMaps for lightweight configurations to prevent complexity.
+
+### Secret Notes
+1. **Secure Handling:** Avoid storing Secrets in plain text files. Use tools like `kubectl` to manage them.
+2. **Encryption:** Enable encryption at rest for Secrets in your cluster for additional security.
+3. **Access Control:** Use RBAC to restrict access to Secrets.
+
+---
+
+## 5. Conclusion
+
+By using ConfigMaps and Secrets, you can efficiently manage configuration and sensitive data in Kubernetes. Practice creating and applying these resources to deepen your understanding. Always follow best practices to ensure security and maintainability.
 
 ---
 
