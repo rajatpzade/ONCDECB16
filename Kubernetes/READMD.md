@@ -26,6 +26,7 @@ Kubernetes has emerged as the preferred orchestration tool for several reasons:
 ## Architecture of Kubernetes
 Kubernetes employs a master-worker architecture:
 
+
 ### 1. **Master Node**
 Responsible for managing the Kubernetes cluster. Components include:
 - **API Server**: Facilitates communication between users and the cluster.
