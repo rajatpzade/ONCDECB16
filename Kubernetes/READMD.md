@@ -1010,3 +1010,10 @@ spec:
 ---
 
 By understanding and practicing these Kubernetes concepts, students can confidently manage real-world applications using Deployments, StatefulSets, and DaemonSets. For further clarification, explore the official Kubernetes documentation or try more complex setups.
+
+
+
+
+
+
+title 
