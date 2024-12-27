@@ -3,3 +3,6 @@ kind: ConfigMap
 metadata:
   name: my-var
 data:
+  database_name: 
+  user_name:
+  
