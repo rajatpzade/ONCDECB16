@@ -9,4 +9,5 @@ spec:
     - name: mycont
       image: nginx
       containerPort:
-      
+       - name: nginx
+         port
