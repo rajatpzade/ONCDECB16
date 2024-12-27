@@ -8,6 +8,4 @@ spec:
   containers:
     - name: mycont
       image: nginx
-      containerPort:
-       - name: nginx
-         ports: 80
+      ports
