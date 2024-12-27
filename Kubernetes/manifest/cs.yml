@@ -7,3 +7,4 @@ data:
     valueFrom:
       configMapRef:
       name: my-var
+      key: 
