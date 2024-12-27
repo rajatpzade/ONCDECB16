@@ -14,4 +14,5 @@ spec:
       env:
         - name: MYSQL_ROOT_PASSWORD
           value: Redhat
-        - name: user_name 
+        - name: MYSQL_USER_NAME
+            
