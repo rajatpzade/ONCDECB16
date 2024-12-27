@@ -1015,3 +1015,4 @@ By understanding and practicing these Kubernetes concepts, students can confiden
 
 
 
+rwx rwx rwx 
