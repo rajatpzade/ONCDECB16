@@ -6,4 +6,5 @@ metadata:
      app: prod 
 spec: 
   containers:
-    - name: 
+    - name: mycont
+      image:nginx
