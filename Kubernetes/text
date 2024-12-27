@@ -5,14 +5,3 @@ db -> server-mysql , username,password, data sql
 env: MYSQL_ROOT_PASSWORD
 
 
-VAR 
-key:value
-name: PRADEEP
-
-
-
-hello $name
-how are you $name
-$name taking batch obcdecb16
-$name currntly working as devops lead
-
