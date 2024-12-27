@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: my-var
 data:
-  database_name: 
-  user_name:
-  db_password:
+  database_name: studentapp
+  user_name: rajat
+  db_password: Redhat
