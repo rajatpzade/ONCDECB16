@@ -28,7 +28,7 @@ spec:
         - name:  MYSQL_USER_NAME
           valueFrom:
             configMapKeyRef:
-              key: db_password
+              key: 
         - name:  MYSQL_ROOT_PASSWORD
           valueFrom:
             configMapKeyRef:
