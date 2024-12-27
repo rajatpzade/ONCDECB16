@@ -5,4 +5,4 @@ metadata:
 data:
   name: MYSQL_ROOT_PASSWORD
     valueFrom:
-      con
+      configMapRef
