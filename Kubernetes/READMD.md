@@ -483,7 +483,7 @@ Kubernetes networking is fundamental for ensuring smooth communication between v
   - Share the same IP address.
   - Can communicate directly using `localhost` and exposed container ports.
 
-![k8s Diagram](img/intra)
+![k8s Diagram](img/intrapod.gif)
 
 #### Example:
 ```yaml
