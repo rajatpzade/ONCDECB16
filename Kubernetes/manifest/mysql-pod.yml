@@ -17,4 +17,5 @@ spec:
         - name: MYSQL_USER_NAME
           value: rajat
         - name: DB_Name
-          value: 
+          value: studentapp
+          
