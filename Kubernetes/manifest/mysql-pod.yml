@@ -21,4 +21,4 @@ spec:
 
           # envpass to configmap
 
-        - name:   
+        - name:  MYSQL_ROOT_PASSWORD
