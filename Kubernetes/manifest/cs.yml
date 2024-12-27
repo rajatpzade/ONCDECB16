@@ -4,4 +4,4 @@ metadata:
   name: my-var
 data:
   name: MYSQL_ROOT_PASSWORD
-    
+    valuef
