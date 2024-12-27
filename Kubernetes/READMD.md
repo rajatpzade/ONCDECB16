@@ -1011,6 +1011,236 @@ spec:
 
 By understanding and practicing these Kubernetes concepts, students can confidently manage real-world applications using Deployments, StatefulSets, and DaemonSets. For further clarification, explore the official Kubernetes documentation or try more complex setups.
 
+----
+
+# Kubernetes: ConfigMap, Secrets, and Persistent Storage
+
+## Introduction
+In Kubernetes, managing configuration data and storage are fundamental aspects of application deployment. ConfigMaps and Secrets allow you to decouple configuration data from your application code, while Persistent Volumes (PV) and Persistent Volume Claims (PVC) provide reliable storage solutions.
+
+---
+
+## Storing Variables using ConfigMap and Secrets
+
+### ConfigMap
+A **ConfigMap** is a Kubernetes resource used to store non-sensitive configuration data in key-value pairs. Applications can consume this data as environment variables, command-line arguments, or configuration files.
+
+#### Features of ConfigMap
+- Decouples configuration data from application logic.
+- Facilitates environment-specific configuration management.
+- Supports reusability and scalability.
+
+#### Manifest Example for ConfigMap
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+```
+
+#### Using ConfigMap in a Pod
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-demo
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    env:
+    - name: APP_ENV
+      valueFrom:
+        configMapKeyRef:
+          name: app-config
+          key: APP_ENV
+    - name: APP_DEBUG
+      valueFrom:
+        configMapKeyRef:
+          name: app-config
+          key: APP_DEBUG
+```
+
+### Secrets
+A **Secret** is similar to ConfigMap but designed to store sensitive data like passwords, tokens, and keys.
+
+#### Features of Secrets
+- Stores base64-encoded sensitive data.
+- Supports tight access controls using RBAC.
+- Can be consumed as environment variables or volumes.
+
+#### Manifest Example for Secret
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+  namespace: default
+type: Opaque
+data:
+  username: bXl1c2Vy # base64 for "myuser"
+  password: bXlwYXNz # base64 for "mypass"
+```
+
+#### Using Secret in a Pod
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-demo
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    env:
+    - name: DB_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: db-credentials
+          key: username
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-credentials
+          key: password
+```
+
+---
+
+## Persistent Storage with PV, PVC, and Dynamic Volumes
+
+### Persistent Volume (PV)
+A **Persistent Volume** is a piece of storage in the cluster provisioned by an administrator or dynamically through storage classes.
+
+#### Manifest Example for PV
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+```
+
+### Persistent Volume Claim (PVC)
+A **Persistent Volume Claim** is a request for storage by a user. PVCs consume PVs based on the requested size and access mode.
+
+#### Manifest Example for PVC
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+#### Using PV and PVC in a Pod
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-demo
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: my-storage
+  volumes:
+  - name: my-storage
+    persistentVolumeClaim:
+      claimName: my-pvc
+```
+
+### Dynamic Volumes with EBS
+AWS Elastic Block Store (EBS) can dynamically provision storage for Kubernetes clusters using StorageClasses.
+
+#### Manifest Example for StorageClass
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  fsType: ext4
+```
+
+#### PVC Example for Dynamic Volume
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-pvc
+spec:
+  storageClassName: ebs-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+#### Using PVC in a Pod
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-demo
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/data"
+      name: ebs-storage
+  volumes:
+  - name: ebs-storage
+    persistentVolumeClaim:
+      claimName: ebs-pvc
+```
+
+---
+
+## Practical Notes for Students
+
+### Hands-On Steps
+1. **Creating ConfigMaps and Secrets**:
+   - Use `kubectl apply -f <manifest-file.yaml>`.
+   - Verify with `kubectl get configmap` or `kubectl get secret`.
+
+2. **Using PV and PVC**:
+   - Create PV and PVC manifests.
+   - Apply using `kubectl apply -f <pv-pvc-manifest.yaml>`.
+   - Check PVC status with `kubectl get pvc`.
+
+3. **Dynamic Storage with EBS**:
+   - Ensure AWS IAM permissions are configured.
+   - Create a StorageClass and PVC manifest.
+   - Apply and verify using `kubectl get sc` and `kubectl get pvc`.
+
+### Troubleshooting Tips
+- Ensure base64 encoding for Secrets.
+- Check PVC binding status and PV availability.
+- Verify node permissions for EBS storage provisioning.
+
+By mastering these concepts, students can effectively manage configuration data and storage in Kubernetes, laying the foundation for scalable and reliable application deployments.
 
 
 
