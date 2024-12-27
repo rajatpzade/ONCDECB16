@@ -16,4 +16,4 @@ spec:
      valueFrom: 
        configMapKeyref:
           name: my-vars
-          key: 
+          key: DB_USER
