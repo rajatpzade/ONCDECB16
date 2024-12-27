@@ -12,4 +12,5 @@ spec:
     ports:
       - containerPort: 80
   env: 
-   - name: 
+   - name: DB_USER
+   
