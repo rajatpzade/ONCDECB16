@@ -1,9 +1,0 @@
-manifest -> yaml
--> object 
-
-pod
-service 
-rc
-ns
-rs
-deployment 
