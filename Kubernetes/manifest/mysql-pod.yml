@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Pod
-metadata: 
-  labels: 
+metadata:
+  labels:
     app: mysql
   name: mysql
 spec:
   containers:
-  - name: mysql
-    image: mysgl
-    ports:
     - name: mysql
-      containerPort: 3306
-
-
-
+      image: mysql
+      ports:
+        - name: mysql
+          containerPort: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: Redhat
