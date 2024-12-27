@@ -1015,20 +1015,3 @@ By understanding and practicing these Kubernetes concepts, students can confiden
 
 
 
-
-title 
-
-objective 
-
-expn
-
-roles 
-
-skills
-
-edu
-
-certificai
-
-personal details
-
