@@ -17,3 +17,9 @@ spec:
        configMapKeyref:
           name: my-vars
           key: DB_USER
+   - name: DB_PASS
+     valueFrom: 
+       configMapKeyref:
+          name: my-vars
+          key: DB_USER
+
