@@ -9,7 +9,8 @@ spec:
   - name: mysql
     image: mysgl
     ports:
-    
+
+     ontainerPort: 3306
 
 
 
