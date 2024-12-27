@@ -3,5 +3,7 @@ kind: Pod
 metadata: 
   labels: 
     app: mysql
-    name: my
+  name: mysql
+  
+
 
