@@ -7,4 +7,6 @@ metadata:
 spec: 
   containers:
     - name: mycont
-      image:nginx
+      image: nginx
+      containerPort:
+      
