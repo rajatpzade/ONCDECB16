@@ -16,4 +16,5 @@ spec:
           value: Redhat
         - name: MYSQL_USER_NAME
           value: rajat
-        - name: DB
+        - name: DB_Name
+          value: 
