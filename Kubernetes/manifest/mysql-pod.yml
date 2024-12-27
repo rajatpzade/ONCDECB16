@@ -29,7 +29,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: user_name
-        - name:  MYSQL_ROOT_PASSWORD
+        - name:  DB_Name
           valueFrom:
             configMapKeyRef:
-              key: db_password            
+              key:             
