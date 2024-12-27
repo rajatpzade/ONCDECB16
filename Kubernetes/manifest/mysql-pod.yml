@@ -8,6 +8,7 @@ spec:
   containers:
   - name: mysql
     image: mysgl
+    
 
 
 
