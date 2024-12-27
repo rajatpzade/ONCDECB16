@@ -32,4 +32,4 @@ spec:
         - name:  DB_Name
           valueFrom:
             configMapKeyRef:
-              key:             
+              key: database_name
