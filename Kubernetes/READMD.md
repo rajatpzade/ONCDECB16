@@ -1024,4 +1024,11 @@ expn
 
 roles 
 
-teach
+skills
+
+edu
+
+certificai
+
+personal details
+
