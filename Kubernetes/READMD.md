@@ -26,7 +26,7 @@ Kubernetes has emerged as the preferred orchestration tool for several reasons:
 ## Architecture of Kubernetes
 Kubernetes employs a master-worker architecture:
 
-![arch.gif]
+![k8s Diagram](images/diagram.png "LVM Workflow Diagram")
 
 ### 1. **Master Node**
 Responsible for managing the Kubernetes cluster. Components include:
