@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: my-var
 data:
-  : value
+  name: v
