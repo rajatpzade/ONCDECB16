@@ -3,8 +3,3 @@ kind: ConfigMap
 metadata:
   name: my-var
 data:
-  name: MYSQL_ROOT_PASSWORD
-    valueFrom:
-      configMapRef:
-      name: my-var
-      key: 
