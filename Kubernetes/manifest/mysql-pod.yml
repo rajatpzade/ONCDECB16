@@ -19,4 +19,6 @@ spec:
         - name: DB_Name
           value: studentapp
 
-          
+          # envpass to configmap
+
+        - name:   
