@@ -13,4 +13,4 @@ spec:
       - containerPort: 80
   env: 
    - name: DB_USER
-   
+     value
