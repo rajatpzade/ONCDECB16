@@ -2,4 +2,4 @@
 
 db -> server-mysql , username,password, data sql
 
-env: MYSQL
+env: MYSQL_ROOT_PASSWORD
