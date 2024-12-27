@@ -9,7 +9,7 @@ spec:
   - name: mysql
     image: mysgl
     ports:
-      
+    - name: my
       containerPort: 3306
 
 
