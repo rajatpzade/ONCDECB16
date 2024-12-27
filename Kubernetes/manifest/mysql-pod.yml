@@ -12,24 +12,18 @@ spec:
         - name: mysql
           containerPort: 3306
       env:
-        # - name: MYSQL_ROOT_PASSWORD
-        #   value: Redhat
-        # - name: MYSQL_USER_NAME
-        #   value: rajat
-        # - name: DB_Name
-        #   value: studentapp
-
-          # envpass to configmap
-
-        - name:  MYSQL_ROOT_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             configMapKeyRef:
+              name: my-var # Name of the ConfigMap
               key: db_password
-        - name:  MYSQL_USER_NAME
+        - name: MYSQL_USER_NAME
           valueFrom:
             configMapKeyRef:
+              name: my-var # Name of the ConfigMap
               key: user_name
-        - name:  DB_Name
+        - name: DB_Name
           valueFrom:
             configMapKeyRef:
+              name: my-var # Name of the ConfigMap
               key: database_name
