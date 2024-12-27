@@ -11,8 +11,8 @@ name: rajat
 
 
 
-hello 
-how are you shubham
-shubham taking batch obcdecb16
+hello $name
+how are you $name
+$name taking batch obcdecb16
 shubham currntly working as devops lead
 
