@@ -11,4 +11,5 @@ spec:
     resources:
     ports:
       - containerPort: 80
-  env
+  env: 
+  
