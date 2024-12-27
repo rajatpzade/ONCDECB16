@@ -1168,66 +1168,32 @@ By using ConfigMaps and Secrets, you can efficiently manage configuration and se
 
 ---
 
-## Persistent Storage with PV, PVC, and Dynamic Volumes
+# Kubernetes Persistent Volumes (PV) and Persistent Volume Claims (PVC) with Dynamic Volumes (EBS)
+
+This guide provides a step-by-step explanation for achieving persistent storage using Kubernetes Persistent Volumes (PV), Persistent Volume Claims (PVC), and dynamic provisioning using AWS Elastic Block Store (EBS).
+
+---
+
+## 1. Introduction
 
 ### Persistent Volume (PV)
-A **Persistent Volume** is a piece of storage in the cluster provisioned by an administrator or dynamically through storage classes.
-
-#### Manifest Example for PV
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: my-pv
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
-```
+A **Persistent Volume** is a storage resource in a Kubernetes cluster that provides persistent storage, independent of Pod lifecycles. It is defined and managed by the cluster administrator.
 
 ### Persistent Volume Claim (PVC)
-A **Persistent Volume Claim** is a request for storage by a user. PVCs consume PVs based on the requested size and access mode.
+A **Persistent Volume Claim** is a request for storage by a user. Pods use PVCs to access PVs.
 
-#### Manifest Example for PVC
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-```
+### Dynamic Provisioning
+Dynamic provisioning automatically creates PVs based on a PVC when a StorageClass is specified. This is particularly useful for cloud-based storage systems like AWS EBS.
 
-#### Using PV and PVC in a Pod
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pv-demo
-spec:
-  containers:
-  - name: app-container
-    image: nginx
-    volumeMounts:
-    - mountPath: "/usr/share/nginx/html"
-      name: my-storage
-  volumes:
-  - name: my-storage
-    persistentVolumeClaim:
-      claimName: my-pvc
-```
+---
 
-### Dynamic Volumes with EBS
-AWS Elastic Block Store (EBS) can dynamically provision storage for Kubernetes clusters using StorageClasses.
+## 2. Practical Steps
 
-#### Manifest Example for StorageClass
+### Step 1: Create a StorageClass for AWS EBS
+
+#### Manifest File
+Save the following content in a file named `storageclass.yaml`:
+
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -1239,65 +1205,101 @@ parameters:
   fsType: ext4
 ```
 
-#### PVC Example for Dynamic Volume
+#### Apply the StorageClass
+Run the following command to create the StorageClass:
+
+```bash
+kubectl apply -f storageclass.yaml
+```
+
+#### Verify the StorageClass
+```bash
+kubectl get storageclass
+```
+
+### Step 2: Create a Persistent Volume Claim (PVC)
+
+#### Manifest File
+Save the following content in a file named `pvc.yaml`:
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ebs-pvc
 spec:
-  storageClassName: ebs-sc
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
+  storageClassName: ebs-sc
 ```
 
-#### Using PVC in a Pod
+#### Apply the PVC
+Run the following command to create the PVC:
+
+```bash
+kubectl apply -f pvc.yaml
+```
+
+#### Verify the PVC
+```bash
+kubectl get pvc
+```
+
+### Step 3: Use the PVC in a Pod
+
+#### Manifest File
+Save the following content in a file named `pod-with-pvc.yaml`:
+
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ebs-demo
+  name: pod-with-ebs
 spec:
   containers:
   - name: app-container
     image: nginx
     volumeMounts:
     - mountPath: "/data"
-      name: ebs-storage
+      name: ebs-volume
   volumes:
-  - name: ebs-storage
+  - name: ebs-volume
     persistentVolumeClaim:
       claimName: ebs-pvc
 ```
 
+#### Apply the Pod Manifest
+```bash
+kubectl apply -f pod-with-pvc.yaml
+```
+
+#### Verify the Pod
+```bash
+kubectl get pods
+```
+
+### Step 4: Check the Persistent Storage
+Log into the Pod and verify the mounted volume:
+
+```bash
+kubectl exec pod-with-ebs -- ls /data
+```
+
 ---
 
-## Practical Notes for Students
+## 3. Conclusion
 
-### Hands-On Steps
-1. **Creating ConfigMaps and Secrets**:
-   - Use `kubectl apply -f <manifest-file.yaml>`.
-   - Verify with `kubectl get configmap` or `kubectl get secret`.
+By following these steps, you can achieve persistent storage in Kubernetes using PV, PVC, and dynamic provisioning with AWS EBS. This setup ensures data persistence beyond the lifecycle of individual Pods and simplifies storage management in your Kubernetes cluster.
 
-2. **Using PV and PVC**:
-   - Create PV and PVC manifests.
-   - Apply using `kubectl apply -f <pv-pvc-manifest.yaml>`.
-   - Check PVC status with `kubectl get pvc`.
+---
 
-3. **Dynamic Storage with EBS**:
-   - Ensure AWS IAM permissions are configured.
-   - Create a StorageClass and PVC manifest.
-   - Apply and verify using `kubectl get sc` and `kubectl get pvc`.
+## Notes for Students
+- **StorageClass**: Defines how storage is provisioned dynamically.
+- **AccessModes**: Determines how a volume can be accessed (e.g., ReadWriteOnce).
+- **Dynamic vs Static Provisioning**: Dynamic provisioning creates PVs on demand, while static provisioning uses pre-defined PVs.
+- **AWS EBS**: Ensure your nodes have IAM roles with permissions to create EBS volumes.
 
-### Troubleshooting Tips
-- Ensure base64 encoding for Secrets.
-- Check PVC binding status and PV availability.
-- Verify node permissions for EBS storage provisioning.
-
-By mastering these concepts, students can effectively manage configuration data and storage in Kubernetes, laying the foundation for scalable and reliable application deployments.
-
-
-
+Practice these steps on a cloud-based Kubernetes cluster to understand how persistent storage works.
