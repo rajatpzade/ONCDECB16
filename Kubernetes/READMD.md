@@ -1303,3 +1303,138 @@ By following these steps, you can achieve persistent storage in Kubernetes using
 - **AWS EBS**: Ensure your nodes have IAM roles with permissions to create EBS volumes.
 
 Practice these steps on a cloud-based Kubernetes cluster to understand how persistent storage works.
+----
+
+# Kubernetes AutoScaling: Types and Horizontal Pod Autoscaler (HPA)
+
+This guide explains the types of AutoScaling in Kubernetes and provides practical steps to implement Horizontal Pod Autoscaler (HPA) with manifest examples.
+
+---
+
+## 1. Types of AutoScaling in Kubernetes
+
+### 1.1. Horizontal Pod Autoscaler (HPA)
+- **Purpose**: Adjusts the number of Pod replicas in a deployment based on CPU, memory, or custom metrics.
+- **Use Case**: Scaling out/in to handle variable workloads.
+
+### 1.2. Vertical Pod Autoscaler (VPA)
+- **Purpose**: Adjusts the resource requests and limits (CPU/memory) of containers in a Pod.
+- **Use Case**: Ensures optimal resource utilization for Pods.
+
+### 1.3. Cluster Autoscaler
+- **Purpose**: Adjusts the number of nodes in a cluster based on pending Pods that cannot be scheduled.
+- **Use Case**: Dynamically increases or decreases cluster size.
+
+---
+
+## 2. Practical Steps: Horizontal Pod Autoscaler (HPA)
+
+### Step 1: Prerequisites
+
+- Ensure the Kubernetes Metrics Server is installed:
+  ```bash
+  kubectl get deployment metrics-server -n kube-system
+  ```
+  If not installed, follow the [Metrics Server installation guide](https://github.com/kubernetes-sigs/metrics-server).
+
+- Deploy an application (e.g., nginx) with resource requests and limits defined.
+
+### Step 2: Create a Deployment
+
+#### Manifest File
+Save the following content in a file named `deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "200Mi"
+          limits:
+            cpu: "200m"
+            memory: "300Mi"
+```
+
+#### Apply the Deployment
+```bash
+kubectl apply -f deployment.yaml
+```
+
+### Step 3: Create the Horizontal Pod Autoscaler
+
+#### Manifest File
+Save the following content in a file named `hpa.yaml`:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+```
+
+#### Apply the HPA
+```bash
+kubectl apply -f hpa.yaml
+```
+
+### Step 4: Verify the HPA
+
+- Check the HPA status:
+  ```bash
+  kubectl get hpa
+  ```
+
+- Simulate a load test to trigger scaling:
+  ```bash
+  kubectl run -i --tty load-generator --image=busybox --restart=Never -- /bin/sh -c "while true; do wget -q -O- http://nginx-deployment.default.svc.cluster.local; done"
+  ```
+
+- Observe the scaling behavior:
+  ```bash
+  kubectl get pods -w
+  ```
+
+---
+
+## 3. Conclusion
+
+Horizontal Pod Autoscaler dynamically adjusts the number of Pods based on resource utilization, ensuring your application can handle varying workloads effectively. Practice creating and testing HPA in a Kubernetes cluster to understand its behavior.
+
+---
+
+## Notes for Students
+- **Metrics Server**: Ensure it is installed and running to enable resource-based scaling.
+- **HPA Metrics**: CPU and memory utilization are commonly used, but custom metrics can also be configured.
+- **Resource Requests and Limits**: Always define them in your Pod specifications to allow proper scaling.
+
+Experiment with different workloads and HPA configurations to gain deeper insights into Kubernetes AutoScaling capabilities.
