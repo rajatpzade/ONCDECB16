@@ -1,7 +1,5 @@
 
 
-db -> server-mysql , username,password, data sql
 
-env: MYSQL_ROOT_PASSWORD
 
 
