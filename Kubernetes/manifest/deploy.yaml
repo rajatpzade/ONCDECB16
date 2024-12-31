@@ -8,4 +8,4 @@ spec:
   template:
     metadata:
       labels:
-        
+        app: deployment-app
