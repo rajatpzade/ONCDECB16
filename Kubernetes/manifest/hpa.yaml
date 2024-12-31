@@ -7,4 +7,4 @@ metadata:
 spec: 
   scaleTargetRef:
    apiVersion: apps/v1
-   
+   kind: De
