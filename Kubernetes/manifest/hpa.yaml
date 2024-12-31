@@ -11,4 +11,5 @@ spec:
    name: my-deploy 
   minReplicas: 1
   maxReplicas: 5
-  matric 
+  matrics:
+     - type: Resource 
