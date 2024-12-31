@@ -4,4 +4,8 @@ metadata:
    name: my-deploy
    labels:
       app: deployment-app
-spec
+spec:
+  template:
+    metadata:
+      labels:
+        
