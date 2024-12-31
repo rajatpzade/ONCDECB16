@@ -20,6 +20,8 @@ spec:
               cpu: 15m
               memory: 100Mi
             requests:
+              cpu: 100m 
+              
          
 
   replicas: 3
