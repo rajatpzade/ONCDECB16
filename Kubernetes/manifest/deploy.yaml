@@ -22,4 +22,4 @@ spec:
     matchLabels:
       app: deployment-app
   strategy:
-     type: 
+     type: RollingUpdate
