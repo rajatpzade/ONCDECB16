@@ -17,6 +17,7 @@ spec:
            - containerPort: 80
           resource:
             limits:
+              cpu: 
 
   replicas: 3
  
