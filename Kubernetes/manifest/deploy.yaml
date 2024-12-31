@@ -19,6 +19,7 @@ spec:
             limits:
               cpu: 15m
               memory: 100Mi
+            requests:
          
 
   replicas: 3
