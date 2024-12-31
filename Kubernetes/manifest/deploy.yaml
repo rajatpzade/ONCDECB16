@@ -18,7 +18,8 @@ spec:
           resource:
             limits:
               cpu: 15m
-              memory:100Mi
+              memory: 100Mi
+         
 
   replicas: 3
  
