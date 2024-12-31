@@ -10,4 +10,5 @@ spec:
    kind: Deployment 
    name: my-deploy 
   minReplicas: 1
-  maxReplicas: 
+  maxReplicas: 5
+  matric 
