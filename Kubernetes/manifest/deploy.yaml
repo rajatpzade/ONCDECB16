@@ -21,4 +21,5 @@ spec:
   selector:
     matchLabels:
       app: deployment-app
-  strategy:    
+  strategy:
+     type: 
