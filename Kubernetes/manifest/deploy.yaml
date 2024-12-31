@@ -13,4 +13,5 @@ spec:
       containers:
         - name: deployment-container
           image: httpd
-          
+          ports:
+           - containerPort: 0
