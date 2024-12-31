@@ -11,4 +11,6 @@ spec:
         app: deployment-app
     spec:
       containers:
-        - name: 
+        - name: deployment-container
+          image: httpd
+          
