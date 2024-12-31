@@ -20,4 +20,5 @@ spec:
  
   selector:
     matchLabels:
-      app:
+      app: deployment-app
+  str    
