@@ -3,4 +3,5 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: my-hpa
   labels:
+    app: deployment-app
   
