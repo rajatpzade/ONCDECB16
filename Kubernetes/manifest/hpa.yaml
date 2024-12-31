@@ -12,4 +12,5 @@ spec:
   minReplicas: 1
   maxReplicas: 5
   matrics:
-     - type: Resource 
+     - type: Resource
+       Resource
