@@ -9,4 +9,5 @@ spec:
    apiVersion: apps/v1
    kind: Deployment 
    name: my-deploy 
-  minRe 
+  minReplicas: 1
+  maxReplicas: 
