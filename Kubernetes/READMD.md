@@ -1438,3 +1438,422 @@ Horizontal Pod Autoscaler dynamically adjusts the number of Pods based on resour
 - **Resource Requests and Limits**: Always define them in your Pod specifications to allow proper scaling.
 
 Experiment with different workloads and HPA configurations to gain deeper insights into Kubernetes AutoScaling capabilities.
+
+-----
+# Introduction to Ingress
+
+Ingress is an API object in Kubernetes that manages external access to services in a cluster, typically HTTP and HTTPS traffic. It provides a way to route traffic to different services based on the request's hostname or path.
+
+## Types of Ingress
+There are different types of Ingress resources that can be used depending on your use case:
+
+1. **Single Service Ingress:**
+   Routes traffic to a single backend service.
+
+2. **Name-Based Virtual Hosting:**
+   Directs traffic based on the hostname specified in the request.
+
+3. **Path-Based Routing:**
+   Routes traffic to different services based on the URL path.
+
+4. **TLS Termination:**
+   Secures traffic using HTTPS by terminating TLS/SSL at the Ingress Controller.
+
+5. **Custom Rules:**
+   Allows for advanced configurations, such as traffic splitting, rate limiting, or integrating with external authentication systems.
+
+## Third-Party Ingress Controllers
+There are several third-party Ingress Controllers available, each offering unique features and benefits. Some popular options include:
+
+- **Nginx Ingress Controller:** A widely used and robust ingress controller with support for various configurations.
+- **Traefik:** A modern, dynamic, and efficient ingress controller with an intuitive dashboard.
+- **HAProxy Ingress:** Known for its high performance and flexibility.
+- **Contour:** A reliable ingress controller built with Envoy Proxy.
+- **Istio Ingress Gateway:** Part of the Istio service mesh for advanced routing and traffic management.
+- **Kong Ingress Controller:** Extends functionality with plugins for authentication, rate limiting, and more.
+
+## Installing Nginx Ingress Controller Using Manifests
+
+Follow the steps below to install the Nginx Ingress Controller using manifests:
+
+1. **Download the Required Manifests:**
+   Obtain the official Nginx Ingress Controller manifests from the Kubernetes documentation or the Nginx GitHub repository.
+
+   ```bash
+   curl -o ingress-nginx.yaml https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+   ```
+
+2. **Apply the Manifest Files:**
+   Use `kubectl` to apply the downloaded manifest.
+
+   ```bash
+   kubectl apply -f ingress-nginx.yaml
+   ```
+
+3. **Verify Installation:**
+   Check that the Ingress Controller pods are running in the `ingress-nginx` namespace:
+
+   ```bash
+   kubectl get pods -n ingress-nginx
+   ```
+
+4. **Access the Ingress Controller:**
+   Once the controller is installed, you can configure ingress resources to define routing rules for your applications.
+
+---
+
+## Practical Steps: Build and Push Docker Images for Home and Mobile Pages
+
+### Step 1: Create Application Directory Structure
+
+1. Create directories for the `home` and `mobile` services:
+
+   ```bash
+   mkdir -p home mobile
+   ```
+
+2. Add the following files to the respective directories:
+
+   - **Home Service:**
+     - `Dockerfile`
+     - `index.html`
+   - **Mobile Service:**
+     - `Dockerfile`
+     - `index.html`
+     - Supporting images: `app_logo.png`, `mobile_screenshot1.png`, `mobile_screenshot2.png`, `download_button.png`
+
+### Step 2: Dockerfile for Home Service
+
+```Dockerfile
+# Use the CentOS 7 base image
+FROM centos:7
+
+# Install Apache HTTP Server
+RUN yum -y update && yum -y install httpd && yum clean all
+
+# Create home directory inside /var/www/html
+RUN mkdir -p /var/www/html/home
+
+# Set /var/www/html as the working directory
+WORKDIR /var/www/html
+
+# Copy the HTML and CSS files into the /var/www/html/home directory
+COPY index.html home/
+COPY styles.css home/
+
+# Add ServerName directive to suppress the warning
+RUN echo "ServerName localhost" >> /etc/httpd/conf/httpd.conf
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start Apache HTTP Server in the foreground when the container starts
+CMD ["httpd", "-D", "FOREGROUND"]
+```
+
+### Step 3: Dockerfile for Mobile Service
+
+```Dockerfile
+# Use the CentOS 7 base image
+FROM centos:7
+
+# Install Apache HTTP Server
+RUN yum -y update && yum -y install httpd && yum clean all
+
+# Create mobile directory inside /var/www/html
+RUN mkdir -p /var/www/html/mobile
+
+# Set /var/www/html as the working directory
+WORKDIR /var/www/html
+
+# Copy the HTML and image files into the /var/www/html/mobile directory
+COPY index.html mobile/
+COPY app_logo.png mobile/
+COPY mobile_screenshot1.png mobile/
+COPY mobile_screenshot2.png mobile/
+COPY download_button.png mobile/
+
+# Add ServerName directive to suppress the warning
+RUN echo "ServerName localhost" >> /etc/httpd/conf/httpd.conf
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start Apache HTTP Server in the foreground when the container starts
+CMD ["httpd", "-D", "FOREGROUND"]
+```
+
+### Step 4: Build and Tag Docker Images
+
+1. Build the Docker image for the `home` service:
+
+   ```bash
+   cd home
+   docker build -t <dockerhub-username>/home-service:latest .
+   ```
+
+2. Build the Docker image for the `mobile` service:
+
+   ```bash
+   cd mobile
+   docker build -t <dockerhub-username>/mobile-service:latest .
+   ```
+
+### Step 5: Push Images to DockerHub
+
+1. Log in to DockerHub:
+
+   ```bash
+   docker login
+   ```
+
+2. Push the images to DockerHub:
+
+   ```bash
+   docker push <dockerhub-username>/home-service:latest
+   docker push <dockerhub-username>/mobile-service:latest
+   ```
+
+---
+
+### Additional Resources
+- [Kubernetes Documentation on Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Nginx Ingress Controller GitHub Repository](https://github.com/kubernetes/ingress-nginx)
+
+
+-----
+
+# Kubernetes Deployment and Ingress Configuration
+
+This guide provides a structured approach to deploying and managing Kubernetes applications using Deployments, Services, and Ingress. The setup includes two applications (`mobileapp` and `homeapp`), their respective Services, and an Ingress resource for routing traffic.
+
+---
+
+## Directory Structure
+
+```
+kubernetes/
+  mobile/
+    deployment.yml
+    service.yml
+  home/
+    deployment.yml
+    service.yml
+  ingress.yml
+```
+
+---
+
+## 1. Mobile Application Deployment
+
+### `deployment.yml`
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mobileapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mobileapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: mobileapp
+    spec:
+      containers:
+      - name: mobileapp
+        image: rajatpzade/mobileapp:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 80
+```
+
+### `service.yml`
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mobileapp-service
+spec:
+  selector:
+    app: mobileapp
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+```
+
+---
+
+## 2. Home Application Deployment
+
+### `deployment.yml`
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homeapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: homeapp
+    spec:
+      containers:
+      - name: homeapp
+        image: rajatpzade/myhome:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 80
+```
+
+### `service.yml`
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeapp-service
+spec:
+  selector:
+    app: homeapp
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+```
+
+---
+
+## 3. Ingress Configuration
+
+### `ingress.yml`
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: demo.com
+    http:
+      paths:
+      - path: /home
+        pathType: Prefix
+        backend:
+          service:
+            name: homeapp-service
+            port:
+              number: 80
+      - path: /mobile
+        pathType: Prefix
+        backend:
+          service:
+            name: mobileapp-service
+            port:
+              number: 80
+```
+
+Apply all the manifests:
+
+```bash
+kubectl apply -f kubernetes/
+```
+
+---
+
+## 4. Installing Helm
+
+Download and install Helm:
+
+```bash
+wget https://get.helm.sh/helm-v3.16.4-linux-amd64.tar.gz
+tar -zxvf helm-v3.16.4-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+```
+
+Verify the installation:
+
+```bash
+helm version
+```
+
+---
+
+## 5. Installing Nginx Ingress Controller
+
+Refer to the official [Nginx Ingress Controller Installation Guide](https://docs.nginx.com/nginx-ingress-controller/installation/installing-nic/installation-with-helm/) for detailed steps.
+
+### Step-by-Step Installation
+
+1. **Add the Nginx Ingress Controller Chart:**
+
+   ```bash
+   helm repo add nginx-stable https://helm.nginx.com/stable
+   helm repo update
+   ```
+
+2. **Install the Ingress Controller:**
+
+   ```bash
+   helm install my-release nginx-stable/nginx-ingress --version 2.0.0
+   ```
+
+3. **Verify Installation:**
+
+   Check that the Nginx Ingress Controller pods are running:
+
+   ```bash
+   kubectl get pods -n ingress-nginx
+   ```
+
+---
+
+## 6. Testing
+
+1. Add `demo.com` to your `/etc/hosts` file pointing to the Ingress Controller IP.
+2. Access the applications via the following URLs:
+   - Home Application: `http://demo.com/home`
+   - Mobile Application: `http://demo.com/mobile`
+
+---
+
+## Conclusion
+
+This guide provides a comprehensive setup for managing multiple applications using Kubernetes Deployments, Services, and Ingress. With the Nginx Ingress Controller, traffic routing is streamlined, enabling efficient application management.
+
