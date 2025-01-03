@@ -1824,8 +1824,7 @@ Refer to the official [Nginx Ingress Controller Installation Guide](https://docs
 1. **Add the Nginx Ingress Controller Chart:**
 
    ```bash
-   helm repo add nginx-stable https://helm.nginx.com/stable
-   helm repo update
+   helm install my-release oci://ghcr.io/nginxinc/charts/nginx-ingress --version 2.0.0
    ```
 
 2. **Install the Ingress Controller:**
