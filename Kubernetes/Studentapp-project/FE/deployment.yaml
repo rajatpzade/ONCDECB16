@@ -1,1 +1,22 @@
-studentapp-frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studentapp-frontend
+spec:
+  selector:
+    matchLabels:
+      app: studentapp-frontend
+  template:
+    metadata:
+      labels:
+        app: studentapp-frontend
+    spec:
+      containers:
+      - name: studentapp-frontend
+        image: <Image>
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: <Port>
