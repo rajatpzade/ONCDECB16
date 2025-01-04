@@ -2,30 +2,32 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: studentapp-frontend
+  labels:
+    app: studentapp-frontend
 spec:
-  selector:
-    matchLabels:
-      app: studentapp-frontend
   template:
     metadata:
-      labels:
+      labels: 
         app: studentapp-frontend
     spec:
       containers:
-      - name: studentapp-frontend
-        image: <Image>
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
+        - name: studentapp-container
+          image: rajatpzade/student-fe-v1:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 400m
+              memory: 400Mi
 
-replicas: 2
+  replicas: 2
 
-selector:
-   matchLabels: 
+  selector:
+    matchLabels:
       app: studentapp-frontend
-
-strategy:
-  type: RollingUpdate
+  
+  strategy:
+    type: RollingUpdate
