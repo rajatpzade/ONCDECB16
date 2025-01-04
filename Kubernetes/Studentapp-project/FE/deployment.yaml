@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: st
+  name: studentapp-frontend
 spec:
   selector:
     matchLabels:
-      app: myapp
+      app: studentapp-frontend
   template:
     metadata:
       labels:
-        app: myapp
+        app: studentapp-frontend
     spec:
       containers:
       - name: myapp
