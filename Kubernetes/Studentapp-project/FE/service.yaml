@@ -10,4 +10,4 @@ spec:
     name: http
   selector:
     app: studentapp-frontend
-  type: Loadbalancer
+  type: LoadBalancer
