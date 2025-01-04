@@ -12,7 +12,7 @@ spec:
         app: studentapp-frontend
     spec:
       containers:
-      - name: myapp
+      - name: studentapp-frontend
         image: <Image>
         resources:
           limits:
