@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: studentapp-container
-          image: rajatpzade/student-fe-v1:latest
+          image: rajatpzade/frontend-std:latest
           ports:
             - containerPort: 80
           resources:
