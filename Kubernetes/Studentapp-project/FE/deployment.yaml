@@ -28,3 +28,4 @@ selector:
       app: studentapp-frontend
 
 strategy:
+  type: RollingUpdate
