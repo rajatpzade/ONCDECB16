@@ -4,7 +4,7 @@ metadata:
   name: studentapp-service
 spec:
   selector:
-    app: myapp
+    app: studentapp
   ports:
   - port: <Port>
     targetPort: <Target Port>
