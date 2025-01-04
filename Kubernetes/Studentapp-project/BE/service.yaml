@@ -3,8 +3,11 @@ kind: Service
 metadata:
   name: studentapp-service
 spec:
+  ports:
+  - targetPort: 8080
+    port: 8080
+    protocol: TCP
+    name: java
   selector:
     app: studentapp
-  ports:
-  - port: 80
-    targetPort: 8080
+  type: LoadBalancer
