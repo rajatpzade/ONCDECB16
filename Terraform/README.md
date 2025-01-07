@@ -1,3 +1,5 @@
+# Day 1 
+
 # Terraform Basics - Introduction and Notes
 
 ## 1. Introduction to Infrastructure as Code (IAC)
