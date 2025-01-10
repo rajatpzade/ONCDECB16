@@ -248,7 +248,10 @@ A backup of the previous state file.
 ### 6. **.terraform/**
 A hidden directory containing provider plugins and other metadata.
 
-![k8s Diagram](im)
+---
+
+
+![k8s Diagram](images/2025-01-09%2008.48.18.gif)
 
 ---
 
