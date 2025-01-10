@@ -248,6 +248,8 @@ A backup of the previous state file.
 ### 6. **.terraform/**
 A hidden directory containing provider plugins and other metadata.
 
+
+
 ---
 
 ## Additional Notes
