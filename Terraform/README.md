@@ -249,7 +249,7 @@ A backup of the previous state file.
 A hidden directory containing provider plugins and other metadata.
 
 ---
-
+## Refer Diagram:
 
 ![k8s Diagram](images/2025-01-09%2008.48.18.gif)
 
