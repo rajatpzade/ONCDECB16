@@ -440,5 +440,5 @@ output "security_group_id" {
 ## 6. Conclusion
 This guide demonstrated how to create a Security Group in AWS using Terraform, explained HEREDOC for `UserData`, and detailed the key blocks used in Terraform scripts. By practicing these steps, students can enhance their understanding of Terraform and Infrastructure as Code.
 
-heloo
+
 
