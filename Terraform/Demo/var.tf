@@ -19,5 +19,5 @@ variable "public_key" {
 }
 
 variable "access_key" {
-  default = ""
+  default = "AKIAWOOXUHE2FB57VRGQ"
 }
