@@ -21,3 +21,7 @@ variable "public_key" {
 variable "access_key" {
   default = "AKIAWOOXUHE2FB57VRGQ"
 }
+
+variable "secret_key" {
+  default = "id_rsa"
+}
