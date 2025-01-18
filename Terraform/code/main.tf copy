@@ -15,3 +15,6 @@ provider "aws" {
 module "ec2-instance_example_basic" {
   source  = "./modules/ec2-instance" 
 }
+module "ec2-instance_example_basic" {
+  source  = "./modules/ec2-instance" 
+}
