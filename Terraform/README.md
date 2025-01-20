@@ -921,5 +921,136 @@ This filters names longer than three characters.
 | Example      | EC2 instances            | S3 buckets with unique IDs  | Modify list of names     |
 
 ---
+# Terraform Commands and Provisioners
 
-Feel free to experiment with these features to simplify and enhance your Terraform configurations!
+## Terraform Commands
+
+### 1. **Taint Command**
+The `taint` command marks a resource for recreation during the next `terraform apply`. This is useful when a specific resource needs to be replaced without altering the rest of the infrastructure.
+
+#### **Syntax:**
+```bash
+terraform taint <resource_name>
+```
+
+#### **Example:**
+```bash
+terraform taint aws_instance.my_instance
+```
+This marks the `aws_instance.my_instance` resource for recreation.
+
+---
+
+### 2. **Import Command**
+The `import` command allows importing existing infrastructure resources into Terraform state. This is helpful when managing resources created outside of Terraform.
+
+#### **Syntax:**
+```bash
+terraform import <resource_type>.<resource_name> <resource_id>
+```
+
+#### **Example:**
+```bash
+terraform import aws_instance.my_instance i-0abcd1234efgh5678
+```
+This imports the AWS EC2 instance with ID `i-0abcd1234efgh5678` into Terraform as `aws_instance.my_instance`.
+
+---
+
+### 3. **Destroy Command**
+The `destroy` command removes all resources defined in the configuration.
+
+#### **Targeted Destroy (-t)**
+You can destroy specific resources using the `-target` flag.
+
+#### **Syntax:**
+```bash
+terraform destroy -target=<resource_type>.<resource_name>
+```
+
+#### **Example:**
+```bash
+terraform destroy -target=aws_instance.my_instance
+```
+This removes only the `aws_instance.my_instance` resource.
+
+---
+
+## Terraform Provisioners
+Provisioners are used to execute scripts or configurations on a resource after it's created or before it's destroyed. 
+
+### Types of Provisioners
+
+#### 1. **Remote Provisioner**
+Executes commands on a remote machine using SSH or WinRM.
+
+#### **Syntax:**
+```hcl
+provisioner "remote-exec" {
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key = file("~/.ssh/id_rsa")
+    host     = self.public_ip
+  }
+
+  inline = [
+    "sudo apt update",
+    "sudo apt install nginx -y"
+  ]
+}
+```
+
+#### **Use Case:**
+- Installing software on a remote server after resource creation.
+
+---
+
+#### 2. **Local Provisioner**
+Executes commands locally on the machine running Terraform.
+
+#### **Syntax:**
+```hcl
+provisioner "local-exec" {
+  command = "echo 'Deployment completed!' >> deployment.log"
+}
+```
+
+#### **Use Case:**
+- Writing logs or triggering local scripts after resource creation.
+
+---
+
+#### 3. **File Provisioner**
+Copies files or directories from the machine running Terraform to the resource.
+
+#### **Syntax:**
+```hcl
+provisioner "file" {
+  source      = "./app/config.json"
+  destination = "/tmp/config.json"
+
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key = file("~/.ssh/id_rsa")
+    host     = self.public_ip
+  }
+}
+```
+
+#### **Use Case:**
+- Transferring configuration files or assets to remote servers.
+
+---
+
+## Summary Table
+| Command/Provisioner | Purpose                              |
+|---------------------|--------------------------------------|
+| `terraform taint`   | Marks a resource for recreation      |
+| `terraform import`  | Imports existing resources to state  |
+| `terraform destroy` | Removes all or targeted resources    |
+| `remote-exec`       | Runs commands on remote machines     |
+| `local-exec`        | Executes local commands              |
+| `file`              | Transfers files to remote resources  |
+
