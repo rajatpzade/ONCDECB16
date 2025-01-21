@@ -105,7 +105,7 @@ resource "aws_eks_node_group" "example" {
 terraform {
   backend "s3" {
     bucket = "my-bucket-tf"
-    key    = "tf-state"
+    key    = "mt-state-file"
     region = "eu-west-2"
   }
 }
