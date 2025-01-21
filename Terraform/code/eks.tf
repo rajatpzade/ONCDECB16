@@ -102,6 +102,3 @@ resource "aws_eks_node_group" "example" {
 }
 
 
-provider "aws" {
-  region = 
-}
