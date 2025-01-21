@@ -102,3 +102,10 @@ resource "aws_eks_node_group" "example" {
 }
 
 
+terraform {
+  backend "s3" {
+    bucket = "backend-tfrom"
+    key    = "tf-state"
+    region = "ap-southeast-1"
+  }
+}
