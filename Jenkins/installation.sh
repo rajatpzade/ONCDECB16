@@ -3,7 +3,7 @@
 
 # Installation of Java
 
-sudo apt update
+sudo apt update 
 sudo apt install fontconfig openjdk-17-jre  -y
 
 # install jenkins Weekly release
@@ -23,3 +23,5 @@ sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
