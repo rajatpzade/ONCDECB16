@@ -114,4 +114,4 @@ sudo systemctl enable jenkins
 - Jenkins is a powerful tool for CI/CD with robust features and plugins.
 - Installation involves adding repositories, installing Java, and setting up Jenkins on a Linux server.
 
-> **Next Steps**: Explore Jenkins pipelines, create your first job, and understand plugin configurations!
+
