@@ -22,6 +22,9 @@ sudo systemctl enable jenkins
 
 sudo systemctl start jenkins
 
+# Add execute permissions to the script
+chmod +x "$0"
+
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 
