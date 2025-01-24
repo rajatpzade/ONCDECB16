@@ -200,4 +200,108 @@ Here are the steps to create a freestyle job that pulls source code from a Git r
 
 ---
 
-By following these steps, you'll have a Jenkins freestyle job set up to pull source code from a Git repository! 🚀
+# Jenkins Build Agents and Job Configuration 🚀
+
+## 1. Install SSH Build Agent Plugin 🔌
+
+The SSH Build Agent Plugin allows Jenkins to manage and connect with build agents using SSH.
+
+### Steps to Install:
+1. Navigate to **Manage Jenkins** > **Manage Plugins**.
+2. Go to the **Available** tab.
+3. Search for `SSH Build Agents`.
+4. Select the plugin and click **Install without restart**.
+
+---
+
+## 2. Create and Attach SSH Agents to Master Jenkins 🤖
+
+Build agents help distribute build loads across multiple machines.
+
+### Steps to Configure SSH Build Agent:
+1. **Add Node (Build Agent)**:
+   - Go to **Manage Jenkins** > **Manage Nodes and Clouds**.
+   - Click on **New Node**.
+   - Provide a name for the node (e.g., `Build-Agent-1`) and select **Permanent Agent**.
+   - Click **OK**.
+
+2. **Configure Node**:
+   - Enter the following details:
+     - **Remote root directory**: `/home/jenkins` (or any desired directory).
+     - **Labels**: Add labels to identify the node (e.g., `linux`, `build-agent`).
+   - Under **Launch Method**, select **Launch agent via SSH**.
+     - Enter the **host address**, **credentials**, and the **port** (default: 22).
+     - Test the connection to ensure proper configuration.
+   - Save the configuration.
+
+3. **Verify Agent**:
+   - Once the node is added, it will appear on the **Manage Nodes** page.
+   - Check the status; it should be **online**.
+
+### Benefits of SSH Agents:
+- Centralized job execution.
+- Improved build performance with distributed workloads.
+- Scalability for larger projects.
+
+---
+
+## 3. Job Configuration 🛠️
+
+Job configuration defines how Jenkins executes a task.
+
+### Key Configuration Options:
+1. **General**:
+   - Add a description of the job.
+   - Restrict where this project can be run by specifying agent labels (e.g., `linux`, `windows`).
+
+2. **Source Code Management (SCM)**:
+   - Integrate with Git, Subversion, or other SCM tools.
+   - Provide the repository URL and credentials.
+
+3. **Build Triggers**:
+   - Poll SCM: Trigger builds based on repository changes.
+   - Build Periodically: Schedule builds at specific times.
+
+4. **Build Environment**:
+   - Add environment variables.
+   - Delete workspace before the build starts.
+
+5. **Build Steps**:
+   - Execute shell scripts, batch commands, or invoke build tools.
+
+6. **Post-Build Actions**:
+   - Archive artifacts, publish test reports, or send notifications.
+
+---
+
+## 4. Parameterized Jobs 🧰
+
+Parameterized jobs allow dynamic input during the job execution.
+
+### Steps to Parameterize a Job:
+1. Create or open a Jenkins job.
+2. Check **This project is parameterized** under the **General** tab.
+3. Click **Add Parameter** and choose from the available options:
+   - **String Parameter**: Accepts a text value.
+   - **Boolean Parameter**: Provides a checkbox for true/false values.
+   - **Choice Parameter**: Allows selection from predefined options.
+   - **File Parameter**: Uploads a file as a build input.
+4. Save the configuration.
+
+### Usage in Build Steps:
+- Use the parameters in shell or batch commands with `$PARAMETER_NAME` (Linux) or `%PARAMETER_NAME%` (Windows).
+
+### Example Use Case:
+**Scenario**: Build a project based on an environment (e.g., `dev`, `test`, `prod`).
+
+**Steps**:
+1. Add a **Choice Parameter** with options `dev`, `test`, and `prod`.
+2. In the build step, use the parameter to deploy to the selected environment:
+   ```bash
+   echo "Deploying to $ENVIRONMENT environment"
+   ```
+
+---
+
+By following these steps, you can efficiently manage build agents, configure jobs, and use parameterized jobs to enhance Jenkins workflows! 🚀
+
