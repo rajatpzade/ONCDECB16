@@ -1,12 +1,16 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') { 
+        stage('Pull') { 
             steps {
                 // 
             }
         }
-        
+        stage('Build') { 
+            steps {
+                // 
+            }
+        }        
         stage('Test') { 
             steps {
                 // 
