@@ -455,6 +455,155 @@ pipeline {
 
 ---
 
+# 🚀 Install Maven
+
+### 📖 Overview
+Apache Maven is a build automation tool primarily used for Java-based projects. It uses a Project Object Model (POM) file to define project configuration, dependencies, and build steps.
+
+---
+
+## 🛠️ Install Maven
+1. **Download Maven**:
+   - Go to the [Apache Maven official website](https://maven.apache.org/download.cgi).
+   - Download the latest binary zip file.
+
+2. **Install Maven**:
+   - Extract the zip file to a preferred directory (e.g., `/opt/maven`).
+   - Add the Maven `bin` directory to your system's `PATH` environment variable.
+
+3. **Verify Installation**:
+   ```bash
+   mvn -v
+   ```
+   This command should display the Maven version and Java version.
+
+---
+
+# 🌟 Show Creating Maven Project
+### Steps to Create a Maven Project:
+1. **Using Maven Archetype**:
+   ```bash
+   mvn archetype:generate -DgroupId=com.example -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+   ```
+   - `groupId`: Represents the package namespace (e.g., `com.example`).
+   - `artifactId`: Project name (e.g., `my-app`).
+   - `archetypeArtifactId`: Template to generate the project.
+
+2. **Navigate to the Project**:
+   ```bash
+   cd my-app
+   ```
+
+3. **Project Structure**:
+   ```
+   my-app/
+   ├── pom.xml
+   └── src/
+       ├── main/
+       │   └── java/
+       │       └── com/example/App.java
+       └── test/
+           └── java/
+               └── com/example/AppTest.java
+   ```
+
+---
+
+# 📂 Maven Directory Hierarchy
+### Standard Directory Layout:
+- **src/main/java**: Contains source code.
+- **src/main/resources**: Contains application resources (e.g., `application.properties`).
+- **src/test/java**: Contains test code.
+- **src/test/resources**: Contains test resources.
+- **pom.xml**: Core configuration file for the Maven project.
+
+---
+
+# 📜 Explain `pom.xml` File
+The `pom.xml` file is the heart of a Maven project. It defines the project, its dependencies, build configuration, and plugins.
+
+### Key Sections:
+1. **Project Coordinates**:
+   ```xml
+   <groupId>com.example</groupId>
+   <artifactId>my-app</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   ```
+
+2. **Dependencies**:
+   ```xml
+   <dependencies>
+       <dependency>
+           <groupId>junit</groupId>
+           <artifactId>junit</artifactId>
+           <version>4.13.2</version>
+           <scope>test</scope>
+       </dependency>
+   </dependencies>
+   ```
+
+3. **Build Plugins**:
+   ```xml
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.8.1</version>
+               <configuration>
+                   <source>1.8</source>
+                   <target>1.8</target>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>
+   ```
+
+---
+
+# 🔄 Maven Phases
+Maven follows a lifecycle consisting of several phases. Some of the most commonly used phases include:
+
+1. **Validate**: Validates the project structure and checks for missing dependencies.
+2. **Compile**: Compiles the source code.
+3. **Test**: Runs unit tests using the specified testing framework (e.g., JUnit).
+4. **Package**: Packages the compiled code into a distributable format (e.g., `.jar` or `.war`).
+5. **Install**: Installs the package into the local Maven repository.
+6. **Deploy**: Copies the package to a remote repository for sharing with others.
+
+---
+
+# 🏗️ Maven Clean & Package to Build `.war` Artifact
+
+### Clean the Project:
+The `clean` phase removes previously compiled or packaged files:
+```bash
+mvn clean
+```
+
+### Package the Project:
+To create a `.war` file (Web Application Archive):
+1. Add the packaging type in `pom.xml`:
+   ```xml
+   <packaging>war</packaging>
+   ```
+2. Run the package phase:
+   ```bash
+   mvn package
+   ```
+3. The `.war` file will be created in the `target/` directory.
+
+---
+
+# 🎯 Summary
+- Installed Maven and created a Maven project.
+- Learned about Maven's directory hierarchy and the `pom.xml` file.
+- Explored Maven phases and how to build `.war` artifacts using `clean` and `package` commands.
+
+---
+
+> 💡 **Pro Tip**: Always validate your Maven configuration using `mvn validate` before proceeding with complex builds.
+
 
 
 
