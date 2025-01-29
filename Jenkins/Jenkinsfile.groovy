@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Pull') { 
             steps {
-                git branch: 'main', url: 'https://github.com/rajatpzade/TOMCAT.git'
+                git 'https://github.com/rajatpzade/studentapp.ui.git'
             }
         }
         stage('Build') { 
