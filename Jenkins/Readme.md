@@ -604,6 +604,74 @@ To create a `.war` file (Web Application Archive):
 
 > 💡 **Pro Tip**: Always validate your Maven configuration using `mvn validate` before proceeding with complex builds.
 
+----
+
+# 🚀 Integrating Maven in Jenkins
+
+## 📌 Overview
+Maven is a widely used build automation tool for Java projects. Integrating Maven with Jenkins allows for continuous integration and automated builds.
+
+---
+
+## 🛠️ Steps to Integrate Maven in Jenkins
+
+### 1️⃣ Install Maven in Jenkins
+1. Navigate to **Manage Jenkins** → **Global Tool Configuration**.
+2. Under **Maven**, click **Add Maven**.
+3. Provide a name (e.g., `Maven-3.8.6`).
+4. Specify the Maven installation directory or allow Jenkins to install it automatically.
+5. Save the configuration.
+
+---
+
+### 2️⃣ Configure Jenkins to Use Maven
+- Ensure that Maven is correctly set up in **Manage Jenkins** → **Global Tool Configuration**.
+- If required, manually specify the Maven installation directory.
+
+---
+
+## 🏗️ Creating a Maven Job in Jenkins
+
+### 🔹 Creating a Maven Freestyle Job
+1. Navigate to **Jenkins Dashboard** → **New Item**.
+2. Select **Maven Project** and provide a job name.
+3. In the **Source Code Management** section:
+   - Select **Git** and provide the repository URL.
+   - Specify the branch to build (e.g., `main`).
+4. In the **Build Configuration** section:
+   - Set the **Root POM** as `pom.xml`.
+   - Enter `clean package` in the **Goals and options** field.
+5. Save and run the job.
+
+---
+
+## 🔨 Adding a Build Stage in a Jenkins Pipeline
+
+### 🔹 Pipeline Configuration
+A Jenkins pipeline automates Maven builds through script execution. Follow these steps:
+
+1. Create a **Jenkins Pipeline Job**:
+   - Go to **New Item** → **Pipeline**.
+   - Enter a job name and click **OK**.
+
+2. Add a **Jenkinsfile** in your repository with the following pipeline:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/example/repo.git', branch: 'main'
+            }
+        }
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
+}
 
 
 
