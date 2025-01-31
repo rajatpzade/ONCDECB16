@@ -14,8 +14,8 @@ pipeline {
         stage('Test') { 
                 withSonarQubeEnv(credentialsId: 'sonarqube') {
                 sh 'mvn clean verify sonar:sonar'
+            }
         }
-        
         stage('Deploy') { 
             steps {
                 sh 'echo Deploy stage successfully run' 
