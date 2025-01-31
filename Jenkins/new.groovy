@@ -13,9 +13,9 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
+                    withSonarQubeEnv(credentialsId: 'sonarqube') {
+                sh 'mvn clean verify sonar:sonar'
+            }
             }
         }
         stage('Quality Gate') {
