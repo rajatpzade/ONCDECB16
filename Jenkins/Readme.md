@@ -1133,7 +1133,54 @@ sonar-scanner -D sonar.login=your_token_here
 >INFO: ------------------------------------------------------------------------
 >``` 
 
-* The project’s code quality report will now be on the SonarQube dashboard.
+----
+
+## 5. Scanning a Project Using Maven
+
+To scan a Maven project with SonarQube, follow these steps:
+
+### Add SonarQube Plugin to `pom.xml`
+```xml
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.sonarsource.scanner.maven</groupId>
+      <artifactId>sonar-maven-plugin</artifactId>
+      <version>3.9.1.2184</version>
+    </plugin>
+  </plugins>
+</build>
+```
+
+### Run SonarQube Scan
+```bash
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=my-project \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=admin \
+  -Dsonar.password=admin
+```
+
+---
+## 6. Creating a Quality Gate
+A **Quality Gate** is used to enforce code quality standards before merging code.
+
+### Steps to Create a Quality Gate:
+1. **Login to SonarQube UI** at `http://localhost:9000`.
+2. Go to **Quality Gates** section.
+3. Click **Create** and provide a name (e.g., `MyQualityGate`).
+4. Add conditions such as:
+   - **Bugs > 0** → Fails the build if any bug is found.
+   - **Coverage < 80%** → Requires at least 80% code coverage.
+   - **Code Smells > 10** → Ensures maintainability.
+5. Click **Save** and apply it to your project.
+
+### Enforcing the Quality Gate:
+Once a Quality Gate is applied, the build will fail if the criteria are not met.
+
+---
+## 🎯 Conclusion
+By following the above steps, you can successfully install and configure SonarQube, scan your Maven project, and enforce Quality Gates to maintain high-quality code.
 
 
 
