@@ -838,7 +838,7 @@ sudo chown sonar:sonar /opt/sonarqube -R
 
 * Edit the SonarQube configuration file.
 ```bash
-sudo nano /opt/sonarqube/conf/sonar.properties
+sudo vim /opt/sonarqube/conf/sonar.properties
 ```
 > **Step 1:** Find the following lines.
 >```
