@@ -840,7 +840,7 @@ sudo chown sonar:sonar /opt/sonarqube -R
 ```bash
 sudo vim /opt/sonarqube/conf/sonar.properties
 ```
-> **Step 1:** Find the following lines.
+> **Step 1:** Find the following lines. line no 18 and 19 
 >```
 >#sonar.jdbc.username=
 >#sonar.jdbc.password=
