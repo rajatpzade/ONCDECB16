@@ -1179,7 +1179,7 @@ A **Quality Gate** is used to enforce code quality standards before merging code
 Once a Quality Gate is applied, the build will fail if the criteria are not met.
 
 ---
- 🎯 # Integrating SonarQube with Jenkins
+ ## 🎯  Integrating SonarQube with Jenkins
 
 ## 1. Introduction
 Integrating SonarQube with Jenkins allows continuous code quality analysis in CI/CD pipelines. This integration ensures that code is analyzed for bugs, vulnerabilities, and code smells before deployment.
