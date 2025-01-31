@@ -1179,7 +1179,7 @@ A **Quality Gate** is used to enforce code quality standards before merging code
 Once a Quality Gate is applied, the build will fail if the criteria are not met.
 
 ---
-## 🎯 Conclusion
+ 🎯 Conclusion
 By following the above steps, you can successfully install and configure SonarQube, scan your Maven project, and enforce Quality Gates to maintain high-quality code.
 
 
