@@ -1179,10 +1179,93 @@ A **Quality Gate** is used to enforce code quality standards before merging code
 Once a Quality Gate is applied, the build will fail if the criteria are not met.
 
 ---
- 🎯 Conclusion
-By following the above steps, you can successfully install and configure SonarQube, scan your Maven project, and enforce Quality Gates to maintain high-quality code.
+ 🎯 # Integrating SonarQube with Jenkins
 
+## 1. Introduction
+Integrating SonarQube with Jenkins allows continuous code quality analysis in CI/CD pipelines. This integration ensures that code is analyzed for bugs, vulnerabilities, and code smells before deployment.
 
+---
+## 2. Setting Up SonarQube in Jenkins
+
+### 2.1 Install SonarQube Scanner Plugin
+1. Navigate to **Jenkins Dashboard** → **Manage Jenkins** → **Manage Plugins**.
+2. Go to the **Available** tab and search for **SonarQube Scanner**.
+3. Install the plugin and restart Jenkins.
+
+### 2.2 Configure SonarQube in Jenkins
+1. Go to **Manage Jenkins** → **Configure System**.
+2. Find the **SonarQube Servers** section.
+3. Click **Add SonarQube** and provide:
+   - **Name:** `SonarQube`
+   - **Server URL:** `http://your-sonarqube-server:9000`
+   - **Authentication Token:** (Generate from SonarQube under **Security** → **Tokens**)
+4. Click **Save**.
+
+### 2.3 Configure SonarQube Scanner
+1. Go to **Manage Jenkins** → **Global Tool Configuration**.
+2. Find **SonarQube Scanner** and click **Add SonarQube Scanner**.
+3. Provide a name and install it automatically or specify a manual installation.
+4. Click **Save**.
+
+---
+## 3. Adding a Test Stage in Jenkins Pipeline
+To ensure code quality, add a test stage in the Jenkins pipeline.
+
+### Sample `Jenkinsfile`
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+    }
+}
+```
+
+---
+## 4. Creating a Webhook in SonarQube for Quality Gate Wait
+Webhooks in SonarQube notify Jenkins when code analysis is complete.
+
+### 4.1 Create a Webhook in SonarQube
+1. Navigate to **SonarQube Dashboard** → **Administration** → **Webhooks**.
+2. Click **Create** and provide:
+   - **Name:** `Jenkins Quality Gate`
+   - **URL:** `http://your-jenkins-server/sonarqube-webhook/`
+3. Click **Save**.
+
+### 4.2 Configure Webhook Handling in Jenkins
+Ensure the **waitForQualityGate** step is included in your Jenkins pipeline to wait for SonarQube analysis results.
+
+---
+## 🎯 Conclusion
+Integrating SonarQube with Jenkins enhances code quality monitoring. The test stage ensures early detection of issues, and webhooks automate feedback loops for quality gate enforcement. This setup strengthens CI/CD pipelines with continuous code analysis.
 
 
 
