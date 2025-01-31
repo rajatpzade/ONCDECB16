@@ -1135,7 +1135,7 @@ sonar-scanner -D sonar.login=your_token_here
 
 ----
 
-## 5. Scanning a Project Using Maven
+##  Scanning a Project Using Maven
 
 To scan a Maven project with SonarQube, follow these steps:
 
@@ -1162,7 +1162,7 @@ mvn clean verify sonar:sonar \
 ```
 
 ---
-## 6. Creating a Quality Gate
+##  Creating a Quality Gate
 A **Quality Gate** is used to enforce code quality standards before merging code.
 
 ### Steps to Create a Quality Gate:
