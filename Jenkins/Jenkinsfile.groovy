@@ -12,10 +12,9 @@ pipeline {
             }
         }        
         stage('Test') { 
-            steps {
-                sh 'echo Test stage successfully run'
-            }
-        }
+                withSonarQubeEnv(credentialsId: 'sonarqube') {
+    // some block
+}
         stage('Deploy') { 
             steps {
                 sh 'echo Deploy stage successfully run' 
