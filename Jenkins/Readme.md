@@ -858,7 +858,7 @@ sudo nano /opt/sonarqube/conf/sonar.properties
 
 * Edit the sonar script file.
 ```bash
-sudo nano /opt/sonarqube/bin/linux-x86-64/sonar.sh
+sudo vim /opt/sonarqube/bin/linux-x86-64/sonar.sh
 ```
 >**Step 1:** About 50 lines down, locate this line.
 >```
@@ -874,7 +874,7 @@ sudo nano /opt/sonarqube/bin/linux-x86-64/sonar.sh
 
 * Create a systemd service file to start SonarQube at system boot.
 ```bash
-sudo nano /etc/systemd/system/sonar.service
+sudo vim /etc/systemd/system/sonar.service
 ```
 > **Step 1:** Paste the following lines to the file.
 >```
