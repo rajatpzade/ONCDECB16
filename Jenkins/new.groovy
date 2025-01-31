@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Pull') {
             steps {
-                git 'https://github.com/your-repo.git'
+                git 'https://github.com/rajatpzade/studentapp.ui.git'
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh '/opt/maven/bin/mvn clean package'
             }
         }
         stage('Test') {
