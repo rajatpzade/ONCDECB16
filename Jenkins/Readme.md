@@ -1214,39 +1214,39 @@ To ensure code quality, add a test stage in the Jenkins pipeline.
 ### Sample `Jenkinsfile`
 ```groovy
 pipeline {
-    agent any
+    agent any 
+
     stages {
-        stage('Checkout') {
+        stage('Pull') { 
             steps {
-                git 'https://github.com/your-repo.git'
+                git url: 'https://github.com/rajatpzade/studentapp.ui.git'
             }
         }
-        stage('Build') {
+
+        stage('Build') { 
             steps {
-                sh 'mvn clean package'
+                sh '/opt/maven/bin/mvn clean package'
             }
-        }
-        stage('Test') {
+        }        
+
+        stage('Test') { 
             steps {
-                sh 'mvn test'
-            }
-        }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonar') {
+                        sh '/opt/maven/bin/mvn clean verify sonar:sonar'
+                    }
                 }
             }
         }
-        stage('Quality Gate') {
+
+        stage('Deploy') { 
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+                sh 'echo Deploy stage successfully run' 
             }
         }
     }
 }
+
 ```
 
 ---
