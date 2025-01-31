@@ -12,7 +12,7 @@ pipeline {
             }
         }        
         stage('Test') { 
-                withSonarQubeEnv(credentialsId: 'sonarqube') {
+                    withSonarQubeEnv(credentialsId: 'sonarqube') {
                 sh 'mvn clean verify sonar:sonar'
             }
         }
