@@ -17,7 +17,7 @@ pipeline {
         stage('Test') { 
             steps {
                 script {
-                    withSonarQubeEnv(credentialsId: 'sonar') {
+                    withSonarQubeEnv(credentialsId: 'sonarqube') {
                         sh '/opt/maven/bin/mvn clean verify sonar:sonar'
                     }
                 }
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Deploy') { 
             steps {
-                sh 'echo Deploy stage successfully run' 
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://3.10.24.203:8080/')], contextPath: '/', war: '**//*.war'
             }
         }
     }
