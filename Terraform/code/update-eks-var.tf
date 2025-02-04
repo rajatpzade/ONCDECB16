@@ -15,4 +15,4 @@ variable node_instance_type {
 }
 
 
-    9209622821
+    
