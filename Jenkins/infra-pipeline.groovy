@@ -8,10 +8,10 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh ''' cd Terraform/ 
-                     cd eks/ 
-                     terraform init
-                     terraform plan'''
+                sh '''  cd Terraform/ 
+                        cd eks/ 
+                        terraform init
+                        terraform plan'''
             }
         }
         stage('Deploy') {
