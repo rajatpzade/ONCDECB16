@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Pull') {
             steps {
-                git branch: 'main', url: 'https://github.com/shubhamkalsait/on-cdec-b13-terraform.git'
+                git branch: 'main', url: 'https://github.com/rajatpzade/ONCDECB16.git'
             }
         }
         stage('Test') {
