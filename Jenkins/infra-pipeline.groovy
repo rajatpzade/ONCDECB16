@@ -13,7 +13,7 @@ pipeline {
                         terraform init
                         terraform plan'''
             }
-        }
+        }   
         stage('Deploy') {
             steps {
                 sh ''' cd eks/ 
