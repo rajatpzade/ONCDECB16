@@ -23,4 +23,3 @@ pipeline {
     }
 }
 
-https://github.com/rajatpzade/ONCDECB16.git
