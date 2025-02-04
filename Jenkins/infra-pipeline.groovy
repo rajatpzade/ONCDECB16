@@ -5,7 +5,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/rajatpzade/ONCDECB16.git'
             }
-        }
+        }   
         stage('Test') {
             steps {
                 sh '''  cd Terraform/ 
