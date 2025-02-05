@@ -14,7 +14,7 @@ pipeline {
                         terraform plan'''
             }
         }   
-        stage('Deploy') {
+        stage('Deploy') {   
             steps {
                 sh ''' cd eks/ 
                     terraform init
