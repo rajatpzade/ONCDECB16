@@ -117,5 +117,20 @@ Datadog can be used to monitor containers running in Docker or Kubernetes cluste
    ```
 
 ---
+## Difference Between Prometheus and Grafana
 
-By following these steps, students can effectively monitor cloud and containerized infrastructure using Datadog. 🚀
+| Feature         | Prometheus        | Grafana            |
+|----------------|------------------|--------------------|
+| Purpose       | Time-series database and monitoring tool | Visualization and analytics platform |
+| Data Storage  | Stores time-series data natively | Does not store data; connects to data sources |
+| Query Language | PromQL (Powerful metric queries) | Uses different query languages based on data source |
+| Alerting      | Built-in alert manager | Supports alerting via integrated services |
+| Integration   | Native support for Kubernetes, Docker | Connects with multiple sources including Prometheus, AWS, MySQL |
+| Visualization | Limited | Rich graphical dashboards |
+| Use Case      | Collects and processes metrics | Displays and visualizes collected data |
+
+**Conclusion:**
+- Use **Prometheus** for data collection and storage.
+- Use **Grafana** for visualization and dashboarding.
+- Both tools are often used together for complete monitoring solutions.
+
