@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-southeast-2"
 }
 
 # Fetch the Default VPC
@@ -16,7 +16,7 @@ data "aws_subnets" "default" {
 
   filter {
     name   = "availability-zone"
-    values = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1f"]
+    values = ["ap-southeast-2b", "ap-southeast-2c", "ap-southeast-2a", "ap-southeast-2b", "ap-southeast-2c"]
   }
 }
 
