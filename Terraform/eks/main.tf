@@ -16,7 +16,7 @@ data "aws_subnets" "default" {
 
   filter {
     name   = "availability-zone"
-    values = ["ap-southeast-2b", "ap-southeast-2c", "ap-southeast-2a", "ap-southeast-2b", "ap-southeast-2c"]
+    values = ["ap-southeast-2b", "ap-southeast-2c", "ap-southeast-2a"]
   }
 }
 
