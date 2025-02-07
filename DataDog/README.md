@@ -102,11 +102,14 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 3. Select **Agent**.
 4. Choose **Ubuntu** as the integration platform.
 
-![dashboard Diagram](img/2.png)
+![dashboard Diagram](img/1.png)
+
 
 ## Step 2: Obtain API Key
 - If you already have an API key, proceed to the next step.
 - If not, create a new API key in your Datadog account.
+
+![dashboard Diagram](img/2.png)
 
 ![dashboard Diagram](img/3.png)
 
