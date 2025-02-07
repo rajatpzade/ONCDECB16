@@ -133,6 +133,8 @@ sudo systemctl enable datadog-agent
 ## Setup Complete
 Your Ubuntu server is now integrated with Datadog and ready for monitoring!
 
+![dashboard Diagram](img/5.png)
+
 
 
 3. **Verify Installation**
