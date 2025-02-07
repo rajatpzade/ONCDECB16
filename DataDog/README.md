@@ -108,6 +108,8 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 - If you already have an API key, proceed to the next step.
 - If not, create a new API key in your Datadog account.
 
+![dashboard Diagram](img/3.png)
+
 ## Step 3: Run Installation Command on Ubuntu Server
 1. Copy the installation command provided by Datadog.
 2. SSH into your Ubuntu server.
