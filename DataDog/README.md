@@ -13,7 +13,7 @@ Datadog is a cloud-based monitoring and security platform for developers, IT tea
 ---
 # Datadog Dashboard Documentation
 
-![k8s Diagram](i)
+![dashboard Diagram](i)
 
 ## Overview
 This document provides details about the Datadog dashboard, including its purpose, key metrics, logs, and alerts.
