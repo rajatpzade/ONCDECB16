@@ -120,7 +120,7 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 sudo systemctl start datadog-agent
 sudo systemctl enable datadog-agent
 ```
-![dashboard Diagram](img/dashboard.png)
+![dashboard Diagram](img/4.png)
 ## Step 5: Verify Integration on Datadog Dashboard
 1. Go to the **Datadog Dashboard**.
 2. Navigate to **Infrastructure**.
