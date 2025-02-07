@@ -85,17 +85,10 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 
 
 
-## Installing the Datadog Agent on Linux and Docker
+## Installing the Datadog Agent on Linux 
 
-### Installing Datadog Agent on Linux
-1. **Sign up for Datadog**
-   - Create an account on [Datadog](https://www.datadoghq.com/)
-   - Retrieve your API Key from the Datadog dashboard.
 
-2. **Install the Agent**
-   ```bash
-   DD_API_KEY=<YOUR_API_KEY> DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
-   ```
+
 
 3. **Verify Installation**
    ```bash
