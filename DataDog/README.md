@@ -111,12 +111,13 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 
 ![dashboard Diagram](img/2.png)
 
-![dashboard Diagram](img/3.png)
 
 ## Step 3: Run Installation Command on Ubuntu Server
 1. Copy the installation command provided by Datadog.
 2. SSH into your Ubuntu server.
 3. Paste and run the command in the terminal.
+
+![dashboard Diagram](img/3.png)
 
 ## Step 4: Start and Enable Datadog Agent
 ```sh
