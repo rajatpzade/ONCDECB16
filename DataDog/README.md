@@ -94,6 +94,8 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 - Sudo or root access
 - Datadog API key (create one if you don't have it)
 
+![dashboard Diagram](img/1.png)
+
 ## Step 1: Go to Datadog Integrations
 1. Log in to your [Datadog account](https://app.datadoghq.com/).
 2. Navigate to **Integrations**.
