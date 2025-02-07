@@ -87,6 +87,41 @@ For any issues or enhancements, contact `your-email@domain.com` or raise an issu
 
 ## Installing the Datadog Agent on Linux 
 
+# Installing Datadog Agent on Ubuntu
+
+## Prerequisites
+- Ubuntu 20.04 or later
+- Sudo or root access
+- Datadog API key (create one if you don't have it)
+
+## Step 1: Go to Datadog Integrations
+1. Log in to your [Datadog account](https://app.datadoghq.com/).
+2. Navigate to **Integrations**.
+3. Select **Agent**.
+4. Choose **Ubuntu** as the integration platform.
+
+## Step 2: Obtain API Key
+- If you already have an API key, proceed to the next step.
+- If not, create a new API key in your Datadog account.
+
+## Step 3: Run Installation Command on Ubuntu Server
+1. Copy the installation command provided by Datadog.
+2. SSH into your Ubuntu server.
+3. Paste and run the command in the terminal.
+
+## Step 4: Start and Enable Datadog Agent
+```sh
+sudo systemctl start datadog-agent
+sudo systemctl enable datadog-agent
+```
+
+## Step 5: Verify Integration on Datadog Dashboard
+1. Go to the **Datadog Dashboard**.
+2. Navigate to **Infrastructure**.
+3. Select **Host** to view the integrated Ubuntu server.
+
+## Setup Complete
+Your Ubuntu server is now integrated with Datadog and ready for monitoring!
 
 
 
