@@ -7,7 +7,7 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Fetch the Default Subnets (Excluding us-east-1e)
+# Fetch the Default Subnets (Excluding unsupported zones)
 data "aws_subnets" "default" {
   filter {
     name   = "vpc-id"
@@ -16,11 +16,11 @@ data "aws_subnets" "default" {
 
   filter {
     name   = "availability-zone"
-    values = ["ap-southeast-2b", "ap-southeast-2c", "ap-southeast-2a"]
+    values = ["ap-southeast-2a", "ap-southeast-2b", "ap-southeast-2c"]
   }
 }
 
-# 🛑 Create IAM Role for EKS Cluster
+# Create IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
   name = "eks-cluster-role"
 
@@ -38,6 +38,7 @@ resource "aws_iam_role" "eks_cluster_role" {
   })
 }
 
+# Attach EKS Policies to IAM Role
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
   role       = aws_iam_role.eks_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
@@ -48,7 +49,7 @@ resource "aws_iam_role_policy_attachment" "eks_service_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
 }
 
-# 🛑 Create IAM Role for EKS Worker Nodes
+# Create IAM Role for Worker Nodes
 resource "aws_iam_role" "eks_node_role" {
   name = "eks-node-role"
 
@@ -66,6 +67,7 @@ resource "aws_iam_role" "eks_node_role" {
   })
 }
 
+# Attach Policies to Worker Node IAM Role
 resource "aws_iam_role_policy_attachment" "eks_worker_node_policy" {
   role       = aws_iam_role.eks_node_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
@@ -81,9 +83,9 @@ resource "aws_iam_role_policy_attachment" "ec2_container_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
-# 🛑 Create EKS Cluster
+# Create EKS Cluster
 resource "aws_eks_cluster" "cbz_cluster" {
-  name     = "${var.project}-cluster"
+  name     = "cbz-cluster"
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
@@ -96,24 +98,46 @@ resource "aws_eks_cluster" "cbz_cluster" {
   ]
 }
 
-# 🛑 Create EKS Node Group
+# Create EKS Node Group
 resource "aws_eks_node_group" "cbz_nodegroup" {
   cluster_name    = aws_eks_cluster.cbz_cluster.name
-  node_group_name = "${var.project}-node-group"
+  node_group_name = "cbz-node-group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = data.aws_subnets.default.ids
 
   scaling_config {
-    desired_size = var.desired_nodes
-    max_size     = var.max_nodes
-    min_size     = var.min_nodes
+    desired_size = 2
+    max_size     = 3
+    min_size     = 1
   }
 
-  instance_types = [var.node_instance_type]
+  instance_types = ["t3.medium"]
 
   depends_on = [
     aws_iam_role_policy_attachment.eks_worker_node_policy,
     aws_iam_role_policy_attachment.eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_container_policy
   ]
+}
+
+# Automatically Update Kubeconfig for kubectl Access
+resource "null_resource" "update_kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks --region ap-southeast-2 update-kubeconfig --name cbz-cluster"
+  }
+
+  depends_on = [aws_eks_cluster.cbz_cluster]
+}
+
+# Output the EKS Cluster Details
+output "eks_cluster_name" {
+  value = aws_eks_cluster.cbz_cluster.name
+}
+
+output "eks_cluster_endpoint" {
+  value = aws_eks_cluster.cbz_cluster.endpoint
+}
+
+output "eks_cluster_arn" {
+  value = aws_eks_cluster.cbz_cluster.arn
 }
