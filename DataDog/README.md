@@ -141,7 +141,7 @@ Your Ubuntu server is now integrated with Datadog and ready for monitoring!
    ```bash
    sudo systemctl status datadog-agent
    ```
-
+![dashboard Diagram](img/3.png)
 
 ### Installing Datadog Agent on Docker
 1. **Run the Datadog Agent as a Docker container:**
