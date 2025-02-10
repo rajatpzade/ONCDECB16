@@ -488,5 +488,6 @@ Datadog provides powerful alerting mechanisms to detect anomalies and notify tea
 - Integrating Datadog with various notification channels enhances incident response.
 
 🚀 **Next Steps**: Explore Datadog’s advanced features like synthetic monitoring and APM!
-🚀 Happy Monitoring with Datadog!
+
+# 🚀 Happy Monitoring with Datadog!
 
