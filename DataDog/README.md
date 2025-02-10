@@ -247,3 +247,97 @@ Datadog can be used to monitor containers running in Docker or Kubernetes cluste
 - Use **Grafana** for visualization and dashboarding.
 - Both tools are often used together for complete monitoring solutions.
 
+---
+
+# Setting up Datadog Agent on Kubernetes
+
+## 1. Installing the Datadog Agent on Kubernetes
+Datadog provides a Kubernetes agent that allows you to collect metrics, logs, and traces from your cluster.
+
+### Steps to Install:
+1. **Create a Datadog API Key**: 
+   - Go to Datadog dashboard → Integrations → APIs → Create an API key.
+2. **Deploy the Agent using Helm**:
+   ```sh
+   helm repo add datadog https://helm.datadoghq.com
+   helm repo update
+   helm install datadog-agent --set datadog.apiKey=<YOUR_API_KEY> datadog/datadog
+   ```
+3. **Verify the Installation**:
+   ```sh
+   kubectl get pods -n default | grep datadog
+   ```
+   Ensure the pods are running successfully.
+
+---
+## 2. Host Maps and Container Maps
+Datadog provides visualization tools like **Host Maps** and **Container Maps** to understand cluster health.
+
+### Host Maps:
+- Show CPU, memory usage, and network traffic per node.
+- Helps in identifying high resource-consuming nodes.
+- Navigate to **Infrastructure → Host Map** in Datadog UI.
+
+### Container Maps:
+- Displays real-time resource usage by containers.
+- Helps in identifying performance bottlenecks.
+- Navigate to **Infrastructure → Containers** in Datadog UI.
+
+---
+## 3. Basic Integrations with AWS
+Datadog integrates seamlessly with AWS services to collect logs, metrics, and traces.
+
+### Steps to Integrate:
+1. **Navigate to Integrations → AWS in Datadog.**
+2. **Click on "Add AWS Account."**
+3. **Provide AWS Access and Secret Keys.**
+4. **Enable services like EC2, S3, RDS, Lambda, etc.**
+5. **Save & verify data collection in Datadog metrics.**
+
+---
+## 4. Understanding Metrics in Datadog
+Datadog provides real-time monitoring with various types of metrics.
+
+### Types of Metrics:
+#### 1. **Gauge**
+   - Measures a single value at a particular time.
+   - Example: CPU utilization, memory usage.
+   - Command to send a gauge metric:
+     ```sh
+     dog metric post server.cpu 65
+     ```
+
+#### 2. **Counter**
+   - Measures a value that only increases (e.g., request count).
+   - Example: Number of HTTP requests.
+   - Command to send a counter metric:
+     ```sh
+     dog metric post api.requests.count 1
+     ```
+
+#### 3. **Histogram**
+   - Measures statistical distributions (min, max, avg).
+   - Example: Response times of an API.
+   - Command to send a histogram metric:
+     ```sh
+     dog metric post api.response_time 250 --type histogram
+     ```
+
+---
+## 5. Collecting and Visualizing Metrics in Datadog
+### Steps to Collect and Visualize Metrics:
+1. Navigate to **Metrics → Explorer**.
+2. Search for custom metrics.
+3. Apply filters like namespace, tags, and time range.
+4. Use **Dashboards** to visualize trends over time.
+
+### Creating a Custom Dashboard:
+- Go to **Dashboards → New Dashboard**.
+- Add a new widget → Choose Graph, Gauge, or Table.
+- Select metric from the dropdown.
+- Save & Share the dashboard with your team.
+
+---
+## Conclusion
+Datadog provides powerful monitoring capabilities for Kubernetes, AWS, and custom applications. By setting up the Datadog agent, integrating AWS, and understanding different types of metrics, you can ensure optimal system performance and observability. 🚀
+
