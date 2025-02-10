@@ -341,3 +341,6 @@ Datadog provides real-time monitoring with various types of metrics.
 ## Conclusion
 Datadog provides powerful monitoring capabilities for Kubernetes, AWS, and custom applications. By setting up the Datadog agent, integrating AWS, and understanding different types of metrics, you can ensure optimal system performance and observability. 🚀
 
+---
+
+
