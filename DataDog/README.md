@@ -423,5 +423,70 @@ Custom metrics in Datadog allow users to **extend monitoring capabilities** beyo
 - Experiment with sending more metrics using different **types (gauge, counter, histogram)**.
 - Explore **Datadog integrations** with AWS, Kubernetes, and other cloud services.
 
+----
+
+# 📌 Introduction to Log Management in Datadog
+
+## 🔹 What is Log Management?
+Log management in Datadog allows you to collect, analyze, and monitor logs from various sources to gain insights into application performance, security, and troubleshooting issues.
+
+## 🔹 Collecting Logs with the Datadog Agent
+### 1️⃣ Install the Datadog Agent
+Datadog provides an agent that can be installed on servers, containers, and cloud environments to collect logs.
+
+#### 🔧 Steps to Enable Logging:
+1. Install the Datadog Agent:
+   ```sh
+   DD_API_KEY=<YOUR_API_KEY> bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+   ```
+2. Enable log collection in the `datadog.yaml` file:
+   ```yaml
+   logs_enabled: true
+   ```
+3. Configure log sources in `conf.d/` directory:
+   ```yaml
+   logs:
+     - type: file
+       path: /var/log/app.log
+       service: my_application
+       source: python
+   ```
+4. Restart the Datadog Agent:
+   ```sh
+   sudo systemctl restart datadog-agent
+   ```
+
+## 📌 Introduction to Alerting in Datadog
+Datadog provides powerful alerting mechanisms to detect anomalies and notify teams of potential issues.
+
+## 🔹 Creating Monitors and Alerts
+### 1️⃣ Types of Monitors in Datadog:
+- **Threshold Alerts** – Triggered when a metric crosses a predefined threshold.
+- **Anomaly Detection** – Uses ML-based anomaly detection for unexpected behavior.
+- **Log-Based Alerts** – Generates alerts based on log patterns.
+- **Network Monitors** – Monitors connectivity issues and latency.
+
+### 2️⃣ Creating a Monitor (Example: High CPU Usage Alert)
+#### 🔧 Steps to Create an Alert:
+1. Navigate to **Monitors > New Monitor**.
+2. Select **Metric Monitor**.
+3. Choose a metric (e.g., `system.cpu.user`).
+4. Define a threshold (e.g., Alert if CPU > 80%).
+5. Set a notification channel (e.g., Slack, Email).
+6. Save and Activate the Monitor.
+
+### 3️⃣ Creating a Log-Based Monitor
+1. Navigate to **Monitors > New Monitor**.
+2. Select **Log Monitor**.
+3. Define a log query (e.g., `@error AND service:my_app`).
+4. Set alert conditions (e.g., more than 10 errors in 5 minutes).
+5. Configure notifications and save.
+
+## 🎯 Conclusion
+- Log management in Datadog enables efficient troubleshooting and monitoring.
+- Alerts help in proactively addressing issues before they impact users.
+- Integrating Datadog with various notification channels enhances incident response.
+
+🚀 **Next Steps**: Explore Datadog’s advanced features like synthetic monitoring and APM!
 🚀 Happy Monitoring with Datadog!
 
