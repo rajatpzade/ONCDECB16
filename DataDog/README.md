@@ -343,4 +343,85 @@ Datadog provides powerful monitoring capabilities for Kubernetes, AWS, and custo
 
 ---
 
+# 📊 Custom Metrics in Datadog
+
+## 📌 Overview
+Datadog provides the ability to send **custom metrics** from applications, services, and infrastructure components. These custom metrics help in **monitoring performance, troubleshooting issues, and gaining insights** beyond default system metrics.
+
+---
+
+## 🔹 Sending Custom Metrics to Datadog
+
+### ✅ Prerequisites
+1. A **Datadog account**.
+2. Datadog Agent installed and configured on your system.
+3. API Key from Datadog.
+
+### 🔧 Steps to Send Custom Metrics
+
+#### 1️⃣ Using the DogStatsD Library
+DogStatsD is a statsd-compatible metric aggregator that **sends custom metrics** to Datadog.
+
+- Install the **Datadog Python library**:
+  ```bash
+  pip install datadog
+  ```
+- Create a Python script to send metrics:
+  ```python
+  from datadog import initialize, statsd
+
+  options = {
+      'statsd_host': '127.0.0.1',
+      'statsd_port': 8125
+  }
+
+  initialize(**options)
+
+  # Sending a custom metric
+  statsd.gauge('my.custom.metric', 42)
+  ```
+
+#### 2️⃣ Sending Custom Metrics via API
+
+- Use the Datadog API to send metrics:
+  ```bash
+  curl -X POST "https://api.datadoghq.com/api/v1/series" \
+       -H "Content-Type: application/json" \
+       -H "DD-API-KEY: YOUR_API_KEY" \
+       -d '{ "series" : [{"metric":"custom.metric.example","points":[[1629384000, 20]],"type":"gauge","host":"my-host"}]}'
+  ```
+
+---
+
+## 📊 Building Basic Dashboards for Metrics
+
+### ✅ Creating a Dashboard in Datadog
+1. **Navigate to Dashboards**: Log into Datadog and go to **Dashboards**.
+2. **Create a new Dashboard**: Click **New Dashboard** → **Timeboard** or **Screenboard**.
+3. **Add a Widget**:
+   - Click **Add Graph**.
+   - Select **Metrics**.
+   - Search for your **custom metric** (e.g., `my.custom.metric`).
+4. **Save the Dashboard**.
+
+---
+
+## 📌 Timeboards vs Screenboards
+
+| Feature | Timeboard | Screenboard |
+|---------|----------|------------|
+| Data Representation | Time-series metrics | Static & real-time data |
+| Use Case | Troubleshooting, alerting | Executive reporting, monitoring |
+| Customization | Limited widgets | Highly customizable |
+
+---
+
+## 🎯 Conclusion
+Custom metrics in Datadog allow users to **extend monitoring capabilities** beyond standard system metrics. By leveraging **DogStatsD, APIs, and dashboards**, you can track **application performance, system health, and real-time business insights** efficiently.
+
+✅ **Next Steps**:
+- Experiment with sending more metrics using different **types (gauge, counter, histogram)**.
+- Explore **Datadog integrations** with AWS, Kubernetes, and other cloud services.
+
+🚀 Happy Monitoring with Datadog!
 
